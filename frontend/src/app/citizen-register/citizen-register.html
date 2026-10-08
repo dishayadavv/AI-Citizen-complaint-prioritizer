@@ -1,0 +1,596 @@
+<div class="register-page">
+
+  <!-- =====================================================
+       BACKGROUND
+  ====================================================== -->
+
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+
+
+  <!-- =====================================================
+       TOP NAVIGATION
+  ====================================================== -->
+
+  <header class="register-nav">
+
+    <a
+      href="/"
+      class="brand"
+    >
+
+      <span class="brand-icon">
+        ✦
+      </span>
+
+      <span class="brand-name">
+        CityFix
+      </span>
+
+    </a>
+
+
+    <div class="nav-login">
+
+      <span>
+        Already have an account?
+      </span>
+
+      <a
+        href="/citizen-login"
+        class="login-btn"
+      >
+        Login
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
+  <main class="register-content">
+
+
+    <!-- ===================================================
+         LEFT SIDE
+    ==================================================== -->
+
+    <section class="register-intro">
+
+      <span class="badge">
+        ✦ AI-Powered Civic Platform
+      </span>
+
+
+      <h1>
+        Create Your
+        <span>
+          Citizen Account
+        </span>
+      </h1>
+
+
+      <p class="intro-text">
+
+        Join CityFix and be a part of building
+        cleaner, safer and smarter communities.
+
+      </p>
+
+
+      <!-- FEATURE 1 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          🛡️
+        </div>
+
+        <div>
+
+          <h3>
+            Secure & Safe
+          </h3>
+
+          <p>
+            Your account information is protected
+            with secure authentication practices.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEATURE 2 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          ⚡
+        </div>
+
+        <div>
+
+          <h3>
+            Report & Track
+          </h3>
+
+          <p>
+            Report civic issues and track their
+            progress from your account.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEATURE 3 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          📊
+        </div>
+
+        <div>
+
+          <h3>
+            Better Communities
+          </h3>
+
+          <p>
+            Your voice helps create cleaner,
+            safer and better cities.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- CITY VISUAL -->
+
+      <div class="city-visual">
+
+        <div class="city-glow"></div>
+
+        <div class="city-building building-one"></div>
+        <div class="city-building building-two"></div>
+        <div class="city-building building-three"></div>
+        <div class="city-building building-four"></div>
+        <div class="city-building building-five"></div>
+
+        <div class="city-ground"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         REGISTER CARD
+    ==================================================== -->
+
+    <section class="register-card">
+
+
+      <!-- CARD HEADER -->
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          👤
+        </div>
+
+        <div>
+
+          <h2>
+            Create Account
+          </h2>
+
+          <p>
+            Fill in your details to get started.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           SUCCESS MESSAGE
+      ================================================== -->
+
+      <div
+        class="success-box"
+        *ngIf="successMessage"
+        role="status"
+        aria-live="polite"
+      >
+
+        <span class="message-icon">
+          ✓
+        </span>
+
+        <div>
+
+          <strong>
+            Registration Successful
+          </strong>
+
+          <p>
+            {{ successMessage }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           ERROR MESSAGE
+      ================================================== -->
+
+      <div
+        class="error-box"
+        *ngIf="errorMessage"
+        role="alert"
+        aria-live="assertive"
+      >
+
+        <span class="message-icon">
+          ⚠
+        </span>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           FULL NAME
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            👤
+          </span>
+
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="citizen.name"
+            name="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            minlength="2"
+            maxlength="80"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           EMAIL
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email Address
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            ✉
+          </span>
+
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="citizen.email"
+            name="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            maxlength="120"
+            required
+          />
+
+        </div>
+
+        <small class="field-help">
+          Enter a valid email address.
+        </small>
+
+      </div>
+
+
+      <!-- =================================================
+           PHONE
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="phone">
+          Phone Number
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            ☎
+          </span>
+
+          <input
+            id="phone"
+            type="tel"
+            [(ngModel)]="citizen.phone"
+            name="phone"
+            placeholder="Enter 10-digit phone number"
+            autocomplete="tel"
+            inputmode="numeric"
+            maxlength="10"
+            pattern="[6-9][0-9]{9}"
+            required
+          />
+
+        </div>
+
+        <small class="field-help">
+          Enter a valid 10-digit Indian mobile number.
+        </small>
+
+      </div>
+
+
+      <!-- =================================================
+           PASSWORD
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            🔒
+          </span>
+
+          <input
+            id="password"
+            type="password"
+            [(ngModel)]="citizen.password"
+            name="password"
+            placeholder="Create a strong password"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required
+          />
+
+        </div>
+
+        <small class="field-help">
+          Use at least 8 characters.
+        </small>
+
+      </div>
+
+
+      <!-- =================================================
+           CONFIRM PASSWORD
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          Confirm Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            🔐
+          </span>
+
+          <input
+            id="confirmPassword"
+            type="password"
+            [(ngModel)]="citizen.confirmPassword"
+            name="confirmPassword"
+            placeholder="Re-enter your password"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           ADDRESS + CITY
+      ================================================== -->
+
+      <div class="location-row">
+
+
+        <!-- ADDRESS -->
+
+        <div class="form-group">
+
+          <label for="address">
+            Address
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">
+              📍
+            </span>
+
+            <input
+              id="address"
+              type="text"
+              [(ngModel)]="citizen.address"
+              name="address"
+              placeholder="Enter your address"
+              autocomplete="street-address"
+              maxlength="200"
+              required
+            />
+
+          </div>
+
+        </div>
+
+
+        <!-- CITY -->
+
+        <div class="form-group">
+
+          <label for="city">
+            City
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">
+              🏙️
+            </span>
+
+            <input
+              id="city"
+              type="text"
+              [(ngModel)]="citizen.city"
+              name="city"
+              placeholder="Enter your city"
+              autocomplete="address-level2"
+              maxlength="80"
+              required
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           CREATE ACCOUNT
+      ================================================== -->
+
+      <button
+        type="button"
+        class="register-btn"
+        (click)="register()"
+        [disabled]="isLoading"
+      >
+
+        <span *ngIf="!isLoading">
+
+          Create Account
+
+          <span class="button-arrow">
+            →
+          </span>
+
+        </span>
+
+
+        <span
+          *ngIf="isLoading"
+          class="loading-content"
+        >
+
+          <span class="spinner"></span>
+
+          Creating Account...
+
+        </span>
+
+      </button>
+
+
+      <!-- =================================================
+           SECURITY NOTE
+      ================================================== -->
+
+      <div class="security-note">
+
+        <span>
+          🔒
+        </span>
+
+        <span>
+          Your information is protected and securely processed.
+        </span>
+
+      </div>
+
+
+      <!-- =================================================
+           LOGIN
+      ================================================== -->
+
+      <div class="login-note">
+
+        Already have an account?
+
+        <a href="/citizen-login">
+          Login
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="register-footer">
+
+    <span>
+      © 2026 CityFix
+    </span>
+
+    <span>
+      •
+    </span>
+
+    <span>
+      Building better communities
+    </span>
+
+  </footer>
+
+</div>

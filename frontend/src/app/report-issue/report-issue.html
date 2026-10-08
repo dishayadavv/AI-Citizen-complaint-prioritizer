@@ -1,0 +1,266 @@
+<div class="report-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="report-header">
+
+    <div>
+
+      <span class="badge">
+        🛠️ CityFix
+      </span>
+
+      <h1>
+        Report an Issue
+      </h1>
+
+      <p>
+        Help make your city better by reporting problems in your area.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       REPORT CARD
+  ====================================================== -->
+
+  <div class="report-card">
+
+
+    <!-- ===================================================
+         ISSUE TITLE
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Issue Title
+      </label>
+
+      <input
+        type="text"
+        [(ngModel)]="issue.title"
+        name="title"
+        placeholder="e.g. Large pothole on Main Street"
+      />
+
+    </div>
+
+
+    <!-- ===================================================
+         ISSUE CATEGORY
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Issue Category
+      </label>
+
+      <select
+        [(ngModel)]="issue.category"
+        name="category"
+      >
+
+        <option value="">
+          Select a category
+        </option>
+
+        <option value="Road">
+          Road & Potholes
+        </option>
+
+        <option value="Garbage">
+          Garbage & Waste
+        </option>
+
+        <option value="Water">
+          Water Supply
+        </option>
+
+        <option value="Electricity">
+          Electricity
+        </option>
+
+        <option value="Streetlight">
+          Street Lights
+        </option>
+
+        <option value="Drainage">
+          Drainage
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ===================================================
+         SEVERITY
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Severity
+      </label>
+
+      <select
+        [(ngModel)]="issue.severity"
+        name="severity"
+      >
+
+        <option [ngValue]="null">
+          Select severity
+        </option>
+
+        <option [ngValue]="1">
+          1 - Minor
+        </option>
+
+        <option [ngValue]="2">
+          2 - Low
+        </option>
+
+        <option [ngValue]="3">
+          3 - Moderate
+        </option>
+
+        <option [ngValue]="4">
+          4 - Serious
+        </option>
+
+        <option [ngValue]="5">
+          5 - Critical
+        </option>
+
+      </select>
+
+      <small>
+        1 = Minor issue &nbsp; | &nbsp; 5 = Critical issue
+      </small>
+
+    </div>
+
+
+    <!-- ===================================================
+         DESCRIPTION
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Description
+      </label>
+
+      <textarea
+        [(ngModel)]="issue.description"
+        name="description"
+        rows="5"
+        placeholder="Describe the problem in detail..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- ===================================================
+         LOCATION
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Location
+      </label>
+
+      <input
+        type="text"
+        [(ngModel)]="issue.location"
+        name="location"
+        placeholder="Enter the location of the issue"
+      />
+
+    </div>
+
+
+    <!-- ===================================================
+         PHOTO UPLOAD
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Upload Photo
+      </label>
+
+      <div class="upload-box">
+
+        <span>
+          📷
+        </span>
+
+        <p>
+          Upload an image of the issue
+        </p>
+
+        <small>
+          PNG, JPG or JPEG
+        </small>
+
+
+        <!-- FILE INPUT -->
+
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/jpg"
+          (change)="onFileSelected($event)"
+        />
+
+
+        <!-- SELECTED FILE -->
+
+        <div
+          *ngIf="issue.photo"
+          class="selected-file"
+        >
+
+          📎 Selected:
+
+          <strong>
+            {{ issue.photo?.name }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         SUBMIT BUTTON
+    ==================================================== -->
+
+    <button
+      type="button"
+      class="submit-btn"
+      (click)="submitReport()"
+    >
+
+      Submit Report
+
+    </button>
+
+
+  </div>
+
+</div>

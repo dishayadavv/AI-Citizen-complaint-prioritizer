@@ -1,0 +1,726 @@
+<div class="analytics-dashboard">
+
+
+  <!-- =================================================
+       HEADER
+  ================================================== -->
+
+  <div class="analytics-header">
+
+    <div class="header-content">
+
+      <span class="eyebrow">
+        ADMINISTRATION
+      </span>
+
+      <h1>
+        Complaint Analytics
+      </h1>
+
+      <p>
+        Analyze complaint trends, priorities and AI insights
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="refreshAnalytics()"
+      [disabled]="isLoading"
+    >
+
+      <span>
+        🔄
+      </span>
+
+      {{
+        isLoading
+          ? 'Loading...'
+          : 'Refresh Analytics'
+      }}
+
+    </button>
+
+  </div>
+
+
+
+  <!-- =================================================
+       LOADING
+  ================================================== -->
+
+  <div
+    class="loading-state"
+    *ngIf="isLoading"
+  >
+
+    <div class="loading-icon">
+      ⏳
+    </div>
+
+    <h3>
+      Loading analytics...
+    </h3>
+
+    <p>
+      Please wait while we fetch the latest complaint data.
+    </p>
+
+  </div>
+
+
+
+  <!-- =================================================
+       ERROR
+  ================================================== -->
+
+  <div
+    class="error-state"
+    *ngIf="
+      !isLoading &&
+      errorMessage
+    "
+  >
+
+    <div class="error-icon">
+      ⚠️
+    </div>
+
+    <h3>
+      Unable to load analytics
+    </h3>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <button
+      type="button"
+      (click)="refreshAnalytics()"
+    >
+      Try Again
+    </button>
+
+  </div>
+
+
+
+  <!-- =================================================
+       ANALYTICS CONTENT
+  ================================================== -->
+
+  <div
+    class="analytics-content"
+    *ngIf="
+      !isLoading &&
+      !errorMessage
+    ">
+
+
+    <!-- =================================================
+         TOTAL COMPLAINTS
+    ================================================== -->
+
+    <div class="total-card">
+
+      <div class="total-icon">
+        📋
+      </div>
+
+      <div class="total-info">
+
+        <span>
+          Total Complaints
+        </span>
+
+        <h2>
+          {{ totalComplaints }}
+        </h2>
+
+        <p>
+          Complaints recorded in the system
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PRIORITY OVERVIEW
+    ================================================== -->
+
+    <div class="analytics-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>
+            🎯 Priority Overview
+          </h2>
+
+          <p>
+            Distribution of complaints based on priority level
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="priority-grid">
+
+
+        <!-- CRITICAL -->
+
+        <div class="priority-card critical">
+
+          <div class="priority-top">
+
+            <span class="priority-icon">
+              🚨
+            </span>
+
+            <span class="priority-label">
+              Critical
+            </span>
+
+          </div>
+
+          <strong>
+            {{ priority.critical }}
+          </strong>
+
+          <div class="progress-container">
+
+            <div
+              class="progress-bar critical-bar"
+              [style.width.%]="
+                getPriorityPercentage(
+                  priority.critical
+                )
+              "
+            ></div>
+
+          </div>
+
+          <small>
+            {{
+              getPriorityPercentage(
+                priority.critical
+              )
+            }}%
+          </small>
+
+        </div>
+
+
+
+        <!-- HIGH -->
+
+        <div class="priority-card high">
+
+          <div class="priority-top">
+
+            <span class="priority-icon">
+              🔴
+            </span>
+
+            <span class="priority-label">
+              High
+            </span>
+
+          </div>
+
+          <strong>
+            {{ priority.high }}
+          </strong>
+
+          <div class="progress-container">
+
+            <div
+              class="progress-bar high-bar"
+              [style.width.%]="
+                getPriorityPercentage(
+                  priority.high
+                )
+              "
+            ></div>
+
+          </div>
+
+          <small>
+            {{
+              getPriorityPercentage(
+                priority.high
+              )
+            }}%
+          </small>
+
+        </div>
+
+
+
+        <!-- MEDIUM -->
+
+        <div class="priority-card medium">
+
+          <div class="priority-top">
+
+            <span class="priority-icon">
+              ⚠️
+            </span>
+
+            <span class="priority-label">
+              Medium
+            </span>
+
+          </div>
+
+          <strong>
+            {{ priority.medium }}
+          </strong>
+
+          <div class="progress-container">
+
+            <div
+              class="progress-bar medium-bar"
+              [style.width.%]="
+                getPriorityPercentage(
+                  priority.medium
+                )
+              "
+            ></div>
+
+          </div>
+
+          <small>
+            {{
+              getPriorityPercentage(
+                priority.medium
+              )
+            }}%
+          </small>
+
+        </div>
+
+
+
+        <!-- LOW -->
+
+        <div class="priority-card low">
+
+          <div class="priority-top">
+
+            <span class="priority-icon">
+              ✅
+            </span>
+
+            <span class="priority-label">
+              Low
+            </span>
+
+          </div>
+
+          <strong>
+            {{ priority.low }}
+          </strong>
+
+          <div class="progress-container">
+
+            <div
+              class="progress-bar low-bar"
+              [style.width.%]="
+                getPriorityPercentage(
+                  priority.low
+                )
+              "
+            ></div>
+
+          </div>
+
+          <small>
+            {{
+              getPriorityPercentage(
+                priority.low
+              )
+            }}%
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATUS
+    ================================================== -->
+
+    <div class="analytics-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>
+            📌 Complaint Status
+          </h2>
+
+          <p>
+            Current resolution status of complaints
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="status-grid">
+
+
+        <!-- PENDING -->
+
+        <div class="status-card">
+
+          <div class="status-icon pending-icon">
+            ⏳
+          </div>
+
+          <div class="status-info">
+
+            <span>
+              Pending
+            </span>
+
+            <strong>
+              {{ status.pending }}
+            </strong>
+
+            <small>
+              {{
+                getStatusPercentage(
+                  status.pending
+                )
+              }}% of complaints
+            </small>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- IN PROGRESS -->
+
+        <div class="status-card">
+
+          <div class="status-icon progress-icon">
+            🔄
+          </div>
+
+          <div class="status-info">
+
+            <span>
+              In Progress
+            </span>
+
+            <strong>
+              {{ status.inProgress }}
+            </strong>
+
+            <small>
+              {{
+                getStatusPercentage(
+                  status.inProgress
+                )
+              }}% of complaints
+            </small>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- RESOLVED -->
+
+        <div class="status-card">
+
+          <div class="status-icon resolved-icon">
+            ✅
+          </div>
+
+          <div class="status-info">
+
+            <span>
+              Resolved
+            </span>
+
+            <strong>
+              {{ status.resolved }}
+            </strong>
+
+            <small>
+              {{
+                getStatusPercentage(
+                  status.resolved
+                )
+              }}% of complaints
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CATEGORY + AI
+    ================================================== -->
+
+    <div class="two-column">
+
+
+      <!-- =================================================
+           CATEGORY
+      ================================================== -->
+
+      <div class="analytics-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>
+              📊 Complaints by Category
+            </h2>
+
+            <p>
+              Number of complaints in each category
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="category-list"
+          *ngIf="
+            categories.length > 0
+          "
+        >
+
+          <div
+            class="category-row"
+            *ngFor="
+              let category of categories
+            "
+          >
+
+            <div class="category-name">
+
+              <span>
+                {{ category._id || 'Other' }}
+              </span>
+
+              <strong>
+                {{ category.count }}
+              </strong>
+
+            </div>
+
+
+            <div class="category-progress">
+
+              <div
+                class="category-progress-bar"
+                [style.width.%]="
+                  getCategoryPercentage(
+                    category.count
+                  )
+                "
+              ></div>
+
+            </div>
+
+
+            <small>
+
+              {{
+                getCategoryPercentage(
+                  category.count
+                )
+              }}%
+
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="no-data"
+          *ngIf="
+            categories.length === 0
+          "
+        >
+
+          No category data available.
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           AI LEVEL
+      ================================================== -->
+
+      <div class="analytics-section ai-analytics">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>
+              🤖 AI Level Distribution
+            </h2>
+
+            <p>
+              AI-detected urgency levels
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="ai-list"
+          *ngIf="
+            aiLevels.length > 0
+          "
+        >
+
+          <div
+            class="ai-row"
+            *ngFor="
+              let level of aiLevels
+            "
+          >
+
+            <div class="ai-name">
+
+              <span
+                class="ai-dot"
+                [ngClass]="
+                  getAILevelClass(
+                    level._id
+                  )
+                "
+              ></span>
+
+              <span>
+                {{ level._id || 'Low' }}
+              </span>
+
+              <strong>
+                {{ level.count }}
+              </strong>
+
+            </div>
+
+
+            <div class="ai-progress">
+
+              <div
+                class="ai-progress-bar"
+                [ngClass]="
+                  getAILevelClass(
+                    level._id
+                  )
+                "
+                [style.width.%]="
+                  getAILevelPercentage(
+                    level.count
+                  )
+                "
+              ></div>
+
+            </div>
+
+
+            <small>
+
+              {{
+                getAILevelPercentage(
+                  level.count
+                )
+              }}%
+
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="no-data"
+          *ngIf="
+            aiLevels.length === 0
+          "
+        >
+
+          No AI analysis data available.
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         DYNAMIC INSIGHT
+    ================================================== -->
+
+    <div class="insight-card">
+
+      <div class="insight-icon">
+        💡
+      </div>
+
+      <div class="insight-content">
+
+        <h3>
+          Analytics Insight
+        </h3>
+
+        <p>
+          {{ getAnalyticsInsight() }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

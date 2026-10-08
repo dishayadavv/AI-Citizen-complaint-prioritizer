@@ -1,0 +1,693 @@
+<div class="track-page">
+
+  <!-- Background -->
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+  <div class="grid-pattern"></div>
+
+
+  <!-- ================================= -->
+  <!-- NAVBAR -->
+  <!-- ================================= -->
+
+  <nav class="track-nav">
+
+    <a
+      routerLink="/citizen-dashboard"
+      class="brand">
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div>
+        <div class="brand-name">
+          CityFix
+        </div>
+
+        <div class="brand-subtitle">
+          CITIZEN PORTAL
+        </div>
+      </div>
+
+    </a>
+
+
+    <a
+      routerLink="/citizen-dashboard"
+      class="back-btn">
+
+      ←
+      Dashboard
+
+    </a>
+
+  </nav>
+
+
+  <!-- ================================= -->
+  <!-- MAIN -->
+  <!-- ================================= -->
+
+  <main class="track-container">
+
+
+    <!-- INTRO -->
+    <section class="page-intro">
+
+      <span class="badge">
+        ◉ &nbsp; COMPLAINT TRACKING
+      </span>
+
+      <h1>
+        Track Your
+        <span>Complaint</span>
+      </h1>
+
+      <p>
+        Enter your complaint ID to check the
+        latest status of your reported issue.
+      </p>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- SEARCH CARD -->
+    <!-- ================================= -->
+
+    <section class="track-card">
+
+
+      <div class="input-area">
+
+        <label>
+          Complaint ID
+        </label>
+
+        <div class="input-row">
+
+          <input
+            type="text"
+            [(ngModel)]="complaintId"
+            placeholder="Enter your complaint ID"
+            (keyup.enter)="trackComplaint()"
+            [disabled]="isLoading"
+          />
+
+
+          <button
+            type="button"
+            (click)="trackComplaint()"
+            [disabled]="isLoading || !complaintId.trim()">
+
+
+            <!-- Normal -->
+            <span *ngIf="!isLoading">
+              Track Complaint
+              <span class="button-arrow">→</span>
+            </span>
+
+
+            <!-- Loading -->
+            <span
+              *ngIf="isLoading"
+              class="searching-state">
+
+              <span class="mini-spinner"></span>
+
+              Searching...
+
+            </span>
+
+          </button>
+
+        </div>
+
+
+        <div class="input-hint">
+
+          <span class="hint-icon">
+            ⓘ
+          </span>
+
+          Your complaint ID can be found in
+          <strong>My Complaints → View Details</strong>.
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- LOADING STATE -->
+      <!-- ================================= -->
+
+      <div
+        *ngIf="isLoading"
+        class="tracking-loader">
+
+        <div class="loader-orbit">
+
+          <div class="orbit-ring"></div>
+
+          <div class="orbit-dot">
+            ✦
+          </div>
+
+        </div>
+
+        <h3>
+          Tracking your complaint
+        </h3>
+
+        <p>
+          Fetching the latest information from CityFix...
+        </p>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- ERROR -->
+      <!-- ================================= -->
+
+      <div
+        *ngIf="errorMessage && !isLoading"
+        class="error-message">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <div>
+
+          <strong>
+            Unable to find complaint
+          </strong>
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- COMPLAINT RESULT -->
+      <!-- ================================= -->
+
+      <section
+        *ngIf="complaint && !isLoading"
+        class="complaint-result">
+
+
+        <!-- RESULT HEADER -->
+        <div class="result-header">
+
+
+          <div class="result-id">
+
+            <span class="result-label">
+              COMPLAINT ID
+            </span>
+
+            <h2>
+              {{ complaint._id || complaint.id }}
+            </h2>
+
+          </div>
+
+
+          <div class="current-status">
+
+            <span class="status-label">
+              CURRENT STATUS
+            </span>
+
+            <span
+              class="status"
+              [ngClass]="getStatusClass()">
+
+              <span class="status-dot"></span>
+
+              {{ getCurrentStatus() }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="result-divider"></div>
+
+
+        <!-- ================================= -->
+        <!-- COMPLAINT DETAILS -->
+        <!-- ================================= -->
+
+        <div class="details-heading">
+
+          <span>
+            REPORT INFORMATION
+          </span>
+
+        </div>
+
+
+        <div class="result-grid">
+
+
+          <!-- ISSUE -->
+          <div class="detail">
+
+            <div class="detail-icon">
+              !
+            </div>
+
+            <div>
+
+              <span>
+                Issue
+              </span>
+
+              <strong>
+                {{ complaint.title || 'Not provided' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- CATEGORY -->
+          <div class="detail">
+
+            <div class="detail-icon">
+              ◈
+            </div>
+
+            <div>
+
+              <span>
+                Category
+              </span>
+
+              <strong>
+                {{ complaint.category || 'Other' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- LOCATION -->
+          <div class="detail">
+
+            <div class="detail-icon">
+              ●
+            </div>
+
+            <div>
+
+              <span>
+                Location
+              </span>
+
+              <strong>
+                {{
+                  complaint.location?.address ||
+                  'Not provided'
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- DATE -->
+          <div class="detail">
+
+            <div class="detail-icon">
+              ◷
+            </div>
+
+            <div>
+
+              <span>
+                Reported On
+              </span>
+
+              <strong>
+                {{
+                  complaint.createdAt
+                    ? (complaint.createdAt | date:'mediumDate')
+                    : 'Not available'
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- STATUS PROGRESS -->
+        <!-- ================================= -->
+
+        <div class="progress-heading">
+
+          <div>
+
+            <span class="section-label">
+              LIVE PROGRESS
+            </span>
+
+            <h3>
+              Complaint Journey
+            </h3>
+
+          </div>
+
+
+          <span class="progress-status">
+            Step {{ getStatusStep() }} of 3
+          </span>
+
+        </div>
+
+
+        <div class="timeline">
+
+
+          <!-- ================================= -->
+          <!-- STEP 1 -->
+          <!-- ================================= -->
+
+          <div
+            class="timeline-step"
+            [ngClass]="getStepClass(1)">
+
+            <div class="timeline-marker">
+
+              <span *ngIf="isStepCompleted(1)">
+                ✓
+              </span>
+
+              <span *ngIf="isCurrentStep(1)">
+                1
+              </span>
+
+              <span
+                *ngIf="!isStepCompleted(1) && !isCurrentStep(1)">
+                1
+              </span>
+
+            </div>
+
+
+            <div class="timeline-content">
+
+              <div class="timeline-title-row">
+
+                <strong>
+                  Complaint Submitted
+                </strong>
+
+                <span
+                  *ngIf="isCurrentStep(1)"
+                  class="current-tag">
+
+                  CURRENT
+
+                </span>
+
+                <span
+                  *ngIf="isStepCompleted(1)"
+                  class="completed-tag">
+
+                  COMPLETED
+
+                </span>
+
+              </div>
+
+              <span>
+                {{ getStepDescription(1) }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- STEP 2 -->
+          <!-- ================================= -->
+
+          <div
+            class="timeline-step"
+            [ngClass]="getStepClass(2)">
+
+            <div class="timeline-marker">
+
+              <span *ngIf="isStepCompleted(2)">
+                ✓
+              </span>
+
+              <span *ngIf="isCurrentStep(2)">
+                2
+              </span>
+
+              <span
+                *ngIf="!isStepCompleted(2) && !isCurrentStep(2)">
+                2
+              </span>
+
+            </div>
+
+
+            <div class="timeline-content">
+
+              <div class="timeline-title-row">
+
+                <strong>
+                  In Progress
+                </strong>
+
+                <span
+                  *ngIf="isCurrentStep(2)"
+                  class="current-tag">
+
+                  CURRENT
+
+                </span>
+
+                <span
+                  *ngIf="isStepCompleted(2)"
+                  class="completed-tag">
+
+                  COMPLETED
+
+                </span>
+
+              </div>
+
+              <span>
+                {{ getStepDescription(2) }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- STEP 3 -->
+          <!-- ================================= -->
+
+          <div
+            class="timeline-step"
+            [ngClass]="getStepClass(3)">
+
+            <div class="timeline-marker">
+
+              <span *ngIf="isStepCompleted(3)">
+                ✓
+              </span>
+
+              <span *ngIf="isCurrentStep(3)">
+                3
+              </span>
+
+              <span
+                *ngIf="!isStepCompleted(3) && !isCurrentStep(3)">
+                3
+              </span>
+
+            </div>
+
+
+            <div class="timeline-content">
+
+              <div class="timeline-title-row">
+
+                <strong>
+                  Resolved
+                </strong>
+
+                <span
+                  *ngIf="isCurrentStep(3)"
+                  class="current-tag">
+
+                  CURRENT
+
+                </span>
+
+                <span
+                  *ngIf="isStepCompleted(3)"
+                  class="completed-tag">
+
+                  COMPLETED
+
+                </span>
+
+              </div>
+
+              <span>
+                {{ getStepDescription(3) }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- STATUS MESSAGE -->
+        <!-- ================================= -->
+
+        <div
+          class="status-message"
+          [ngClass]="getStatusClass()">
+
+
+          <div class="status-message-icon">
+
+            <span *ngIf="getCurrentStatus() === 'Pending'">
+              ◷
+            </span>
+
+            <span *ngIf="getCurrentStatus() === 'In Progress'">
+              ⚙
+            </span>
+
+            <span *ngIf="getCurrentStatus() === 'Resolved'">
+              ✓
+            </span>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+
+              <span
+                *ngIf="getCurrentStatus() === 'Pending'">
+                Your complaint is awaiting action
+              </span>
+
+              <span
+                *ngIf="getCurrentStatus() === 'In Progress'">
+                Your complaint is being worked on
+              </span>
+
+              <span
+                *ngIf="getCurrentStatus() === 'Resolved'">
+                Your complaint has been resolved
+              </span>
+
+            </strong>
+
+
+            <span>
+
+              <span
+                *ngIf="getCurrentStatus() === 'Pending'">
+                Our team has received your report and
+                it is waiting to be processed.
+              </span>
+
+              <span
+                *ngIf="getCurrentStatus() === 'In Progress'">
+                Authorities are currently working
+                to resolve the reported issue.
+              </span>
+
+              <span
+                *ngIf="getCurrentStatus() === 'Resolved'">
+                The reported civic issue has been
+                successfully completed.
+              </span>
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- TRACK ANOTHER -->
+        <!-- ================================= -->
+
+        <div class="track-again">
+
+          <button
+            type="button"
+            (click)="clearComplaint()">
+
+            Track Another Complaint
+            <span>→</span>
+
+          </button>
+
+        </div>
+
+
+      </section>
+
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- FOOTER NOTE -->
+    <!-- ================================= -->
+
+    <div class="security-note">
+
+      <span>
+        ✦
+      </span>
+
+      CityFix keeps your complaint information
+      secure and accessible to you.
+
+    </div>
+
+
+  </main>
+
+</div>

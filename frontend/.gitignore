@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Angular build files
+dist/
+.angular/
+
+# Environment variables - IMPORTANT
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Uploaded complaint images
+uploads/
+
+# Coverage and cache
+coverage/
+.cache/
+.tmp/
+
+# VS Code
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db

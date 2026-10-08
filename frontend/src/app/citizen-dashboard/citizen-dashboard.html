@@ -1,0 +1,637 @@
+<div class="dashboard-page">
+
+  <!-- =====================================================
+       BACKGROUND EFFECTS
+  ====================================================== -->
+
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+  <div class="grid-overlay"></div>
+
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+
+  <nav class="dashboard-nav">
+
+    <a
+      routerLink="/citizen-dashboard"
+      class="brand"
+    >
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div class="brand-text">
+
+        <strong>CityFix</strong>
+
+        <span>CITIZEN PORTAL</span>
+
+      </div>
+
+    </a>
+
+
+    <div class="nav-actions">
+
+      <a
+        routerLink="/my-complaints"
+        class="nav-link"
+      >
+        My Complaints
+      </a>
+
+
+      <a
+        routerLink="/report-issue"
+        class="report-nav-btn"
+      >
+        <span>+</span>
+        Report Issue
+      </a>
+
+
+      <button
+        type="button"
+        class="logout-btn"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="dashboard-content">
+
+
+    <!-- ===================================================
+         WELCOME
+    ==================================================== -->
+
+    <section class="welcome-section">
+
+      <div class="welcome-left">
+
+        <div class="active-badge">
+
+          <span class="status-dot"></span>
+
+          CITIZEN ACCOUNT ACTIVE
+
+        </div>
+
+
+        <h1>
+          Welcome back,
+          <span>{{ citizenName }}</span>
+          <span class="wave">👋</span>
+        </h1>
+
+
+        <p class="welcome-description">
+
+          Help make
+          <strong>{{ citizenCity }}</strong>
+          better, one report at a time.
+
+        </p>
+
+
+        <div class="welcome-actions">
+
+          <a
+            routerLink="/report-issue"
+            class="primary-btn"
+          >
+            <span>+</span>
+            Report an Issue
+          </a>
+
+
+          <a
+            routerLink="/my-complaints"
+            class="secondary-btn"
+          >
+            View My Complaints
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- CITY VISUAL -->
+
+      <div class="city-visual">
+
+        <div class="city-ring ring-one"></div>
+
+        <div class="city-ring ring-two"></div>
+
+        <div class="city-ring ring-three"></div>
+
+
+        <div class="city-orb">
+
+          <div class="orb-icon">
+            🏙️
+          </div>
+
+        </div>
+
+
+        <div class="floating-dot dot-one"></div>
+        <div class="floating-dot dot-two"></div>
+        <div class="floating-dot dot-three"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         ERROR
+    ==================================================== -->
+
+    <div
+      class="dashboard-error"
+      *ngIf="errorMessage"
+    >
+
+      <span>⚠️</span>
+
+      {{ errorMessage }}
+
+    </div>
+
+
+
+    <!-- ===================================================
+         STATISTICS
+    ==================================================== -->
+
+    <section class="stats-grid">
+
+
+      <!-- TOTAL -->
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon total-icon">
+            📋
+          </div>
+
+          <span class="stat-label">
+            TOTAL REPORTS
+          </span>
+
+        </div>
+
+
+        <div class="stat-number">
+          {{ totalReports }}
+        </div>
+
+
+        <div class="stat-description">
+          Issues reported by you
+        </div>
+
+      </div>
+
+
+
+      <!-- PENDING -->
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon pending-icon">
+            ⏳
+          </div>
+
+          <span class="stat-label">
+            PENDING
+          </span>
+
+        </div>
+
+
+        <div class="stat-number">
+          {{ pendingReports }}
+        </div>
+
+
+        <div class="stat-description">
+          Waiting for action
+        </div>
+
+      </div>
+
+
+
+      <!-- IN PROGRESS -->
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon progress-icon">
+            ⚙️
+          </div>
+
+          <span class="stat-label">
+            IN PROGRESS
+          </span>
+
+        </div>
+
+
+        <div class="stat-number">
+          {{ inProgressReports }}
+        </div>
+
+
+        <div class="stat-description">
+          Currently being handled
+        </div>
+
+      </div>
+
+
+
+      <!-- RESOLVED -->
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <div class="stat-icon resolved-icon">
+            ✓
+          </div>
+
+          <span class="stat-label">
+            RESOLVED
+          </span>
+
+        </div>
+
+
+        <div class="stat-number">
+          {{ resolvedReports }}
+        </div>
+
+
+        <div class="stat-description">
+          Successfully resolved
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         QUICK ACTIONS
+    ==================================================== -->
+
+    <section class="quick-actions">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="section-label">
+            QUICK ACTIONS
+          </span>
+
+          <h2>
+            What would you like to do?
+          </h2>
+
+          <p>
+            Manage your civic complaints from one place.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="actions-grid">
+
+
+        <!-- REPORT -->
+
+        <a
+          routerLink="/report-issue"
+          class="action-card report-card"
+        >
+
+          <div class="action-icon">
+            📝
+          </div>
+
+
+          <div class="action-content">
+
+            <div class="action-title-row">
+
+              <h3>
+                Report an Issue
+              </h3>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </div>
+
+
+            <p>
+              Report potholes, garbage, water problems,
+              streetlights and other civic issues.
+            </p>
+
+
+            <span class="action-link">
+              Submit a new report
+            </span>
+
+          </div>
+
+        </a>
+
+
+
+        <!-- MY COMPLAINTS -->
+
+        <a
+          routerLink="/my-complaints"
+          class="action-card complaints-card"
+        >
+
+          <div class="action-icon">
+            📊
+          </div>
+
+
+          <div class="action-content">
+
+            <div class="action-title-row">
+
+              <h3>
+                My Complaints
+              </h3>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </div>
+
+
+            <p>
+              View all the issues you have reported
+              and monitor their current status.
+            </p>
+
+
+            <span class="action-link">
+              View your reports
+            </span>
+
+          </div>
+
+        </a>
+
+
+
+        <!-- TRACK -->
+
+        <a
+          routerLink="/track-complaint"
+          class="action-card track-card"
+        >
+
+          <div class="action-icon">
+            🔎
+          </div>
+
+
+          <div class="action-content">
+
+            <div class="action-title-row">
+
+              <h3>
+                Track a Complaint
+              </h3>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </div>
+
+
+            <p>
+              Enter your complaint ID and check
+              the latest status of your report.
+            </p>
+
+
+            <span class="action-link">
+              Track complaint status
+            </span>
+
+          </div>
+
+        </a>
+
+
+
+        <!-- PROFILE -->
+
+        <a
+          routerLink="/citizen-profile"
+          class="action-card profile-card"
+        >
+
+          <div class="action-icon">
+            👤
+          </div>
+
+
+          <div class="action-content">
+
+            <div class="action-title-row">
+
+              <h3>
+                My Profile
+              </h3>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </div>
+
+
+            <p>
+              View your personal information and
+              manage your CityFix account.
+            </p>
+
+
+            <span class="action-link">
+              View your profile
+            </span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         AI SECTION
+    ==================================================== -->
+
+    <section class="ai-section">
+
+
+      <div class="ai-left">
+
+        <div class="ai-badge">
+          <span>✦</span>
+          AI POWERED
+        </div>
+
+
+        <h2>
+          Smarter complaints.
+          <br>
+          <span>Faster action.</span>
+        </h2>
+
+
+        <p>
+          CityFix uses AI-powered analysis to understand
+          the urgency and impact of civic complaints.
+          This helps authorities prioritize important
+          issues and respond more efficiently.
+        </p>
+
+
+        <div class="ai-points">
+
+          <div class="ai-point">
+            <span>✓</span>
+            Intelligent priority scoring
+          </div>
+
+          <div class="ai-point">
+            <span>✓</span>
+            Complaint status tracking
+          </div>
+
+          <div class="ai-point">
+            <span>✓</span>
+            Data-driven civic management
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="ai-visual">
+
+        <div class="ai-orbit orbit-one"></div>
+
+        <div class="ai-orbit orbit-two"></div>
+
+
+        <div class="ai-core">
+
+          <span>AI</span>
+
+          <small>
+            CITYFIX
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="dashboard-footer">
+
+    <div class="footer-brand">
+
+      <div class="footer-logo">
+        ✦
+      </div>
+
+      <div>
+
+        <strong>
+          CityFix
+        </strong>
+
+        <span>
+          Making cities better, one report at a time.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-right">
+
+      <span>
+        Citizen Portal
+      </span>
+
+      <span>
+        © 2026 CityFix
+      </span>
+
+    </div>
+
+  </footer>
+
+</div>

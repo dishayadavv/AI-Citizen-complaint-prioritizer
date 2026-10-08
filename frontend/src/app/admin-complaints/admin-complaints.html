@@ -1,0 +1,1399 @@
+<div class="complaints-page">
+
+  <!-- =================================================
+       HEADER
+  ================================================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        CASE MANAGEMENT
+      </span>
+
+      <h1>
+        Complaints
+      </h1>
+
+      <p>
+        Review, prioritize and manage citizen complaints.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="refreshComplaints()"
+      [disabled]="isLoading"
+    >
+
+      ↻
+
+      {{
+        isLoading
+          ? 'Loading...'
+          : 'Refresh'
+      }}
+
+    </button>
+
+  </header>
+
+
+  <!-- =================================================
+       STATISTICS
+  ================================================== -->
+
+  <section class="stats-grid">
+
+
+    <!-- TOTAL -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        📋
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Total Complaints
+        </span>
+
+        <strong>
+          {{ complaints.length }}
+        </strong>
+
+        <small>
+          All complaints
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- CRITICAL -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon red">
+        🚨
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Critical
+        </span>
+
+        <strong>
+          {{ getCount('Critical') }}
+        </strong>
+
+        <small>
+          Requires urgent attention
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- HIGH -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        🔴
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          High Priority
+        </span>
+
+        <strong>
+          {{ getCount('High') }}
+        </strong>
+
+        <small>
+          High urgency
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon yellow">
+        ⏳
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Pending
+        </span>
+
+        <strong>
+          {{ getStatusCount('Pending') }}
+        </strong>
+
+        <small>
+          Awaiting action
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       ERROR
+  ================================================== -->
+
+  <div
+    class="error-box"
+    *ngIf="!isLoading && errorMessage"
+  >
+
+    <div class="error-icon">
+      ⚠️
+    </div>
+
+    <div>
+
+      <strong>
+        Unable to load complaints
+      </strong>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      (click)="refreshComplaints()"
+    >
+      Try Again
+    </button>
+
+  </div>
+
+
+  <!-- =================================================
+       LOADING
+  ================================================== -->
+
+  <section
+    class="loading-card"
+    *ngIf="isLoading"
+  >
+
+    <div class="loading-icon">
+      ⏳
+    </div>
+
+    <h3>
+      Loading complaints...
+    </h3>
+
+    <p>
+      Please wait while we fetch complaint records.
+    </p>
+
+  </section>
+
+
+  <!-- =================================================
+       MAIN CONTENT
+  ================================================== -->
+
+  <section
+    class="complaints-panel"
+    *ngIf="!isLoading && !errorMessage"
+  >
+
+
+    <!-- =================================================
+         PANEL HEADER
+    ================================================== -->
+
+    <div class="panel-header">
+
+      <div>
+
+        <span class="panel-eyebrow">
+          COMPLAINT RECORDS
+        </span>
+
+        <h2>
+          All Complaints
+        </h2>
+
+        <p>
+          Review and manage complaints submitted by citizens.
+        </p>
+
+      </div>
+
+
+      <div class="record-count">
+
+        <strong>
+          {{ filteredComplaints.length }}
+        </strong>
+
+        <span>
+          records
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         FILTERS
+    ================================================== -->
+
+    <div class="filter-panel">
+
+      <div class="filter-heading">
+
+        <div>
+
+          <strong>
+            Filters & Search
+          </strong>
+
+          <span>
+            Find specific complaints quickly
+          </span>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="clear-button"
+          (click)="clearFilters()"
+        >
+          Clear all
+        </button>
+
+      </div>
+
+
+      <div class="filters">
+
+
+        <!-- SEARCH -->
+
+        <div class="filter-group search-group">
+
+          <label>
+            Search
+          </label>
+
+          <div class="input-wrapper">
+
+            <span>
+              🔍
+            </span>
+
+            <input
+              type="text"
+              placeholder="Search complaints, location..."
+              [(ngModel)]="searchText"
+              (input)="onFilterChange()"
+            />
+
+          </div>
+
+        </div>
+
+
+        <!-- PRIORITY -->
+
+        <div class="filter-group">
+
+          <label>
+            Priority
+          </label>
+
+          <select
+            [(ngModel)]="selectedPriority"
+            (change)="onFilterChange()"
+          >
+
+            <option value="All">
+              All Priorities
+            </option>
+
+            <option value="Critical">
+              Critical
+            </option>
+
+            <option value="High">
+              High
+            </option>
+
+            <option value="Medium">
+              Medium
+            </option>
+
+            <option value="Low">
+              Low
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="filter-group">
+
+          <label>
+            Category
+          </label>
+
+          <select
+            [(ngModel)]="selectedCategory"
+            (change)="onFilterChange()"
+          >
+
+            <option value="All">
+              All Categories
+            </option>
+
+            <option value="Road">
+              Road
+            </option>
+
+            <option value="Garbage">
+              Garbage
+            </option>
+
+            <option value="Water">
+              Water
+            </option>
+
+            <option value="Electricity">
+              Electricity
+            </option>
+
+            <option value="Streetlight">
+              Streetlight
+            </option>
+
+            <option value="Drainage">
+              Drainage
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="filter-group">
+
+          <label>
+            Status
+          </label>
+
+          <select
+            [(ngModel)]="selectedStatus"
+            (change)="onFilterChange()"
+          >
+
+            <option value="All">
+              All Statuses
+            </option>
+
+            <option value="Pending">
+              Pending
+            </option>
+
+            <option value="In Progress">
+              In Progress
+            </option>
+
+            <option value="Resolved">
+              Resolved
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <div class="table-wrapper">
+
+
+      <table
+        *ngIf="filteredComplaints.length > 0"
+      >
+
+        <thead>
+
+          <tr>
+
+            <th>
+              COMPLAINT
+            </th>
+
+            <th>
+              CATEGORY
+            </th>
+
+            <th>
+              LOCATION
+            </th>
+
+            <th>
+              SEVERITY
+            </th>
+
+            <th>
+              PRIORITY
+            </th>
+
+            <th>
+              AI SCORE
+            </th>
+
+            <th>
+              STATUS
+            </th>
+
+            <th>
+              ACTION
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let complaint of filteredComplaints;
+              trackBy: trackByComplaint
+            "
+          >
+
+
+            <!-- =========================================
+                 COMPLAINT
+            ========================================== -->
+
+            <td>
+
+              <div class="complaint-cell">
+
+
+                <!-- PHOTO THUMBNAIL -->
+
+                <div
+                  class="complaint-photo-thumb"
+                  *ngIf="complaint.photo"
+                >
+
+                  <img
+                    [src]="'http://localhost:5000' + complaint.photo"
+                    [alt]="
+                      complaint.title ||
+                      'Complaint photo'
+                    "
+                  />
+
+                </div>
+
+
+                <!-- DEFAULT AVATAR -->
+
+                <div
+                  class="complaint-avatar"
+                  *ngIf="!complaint.photo"
+                >
+
+                  {{
+                    (complaint.title || 'C')
+                      .charAt(0)
+                      .toUpperCase()
+                  }}
+
+                </div>
+
+
+                <!-- COMPLAINT INFO -->
+
+                <div class="complaint-info">
+
+                  <strong>
+
+                    {{
+                      complaint.title ||
+                      'Untitled Complaint'
+                    }}
+
+                  </strong>
+
+                  <span>
+
+                    ID:
+                    {{
+                      complaint._id ||
+                      'N/A'
+                    }}
+
+                  </span>
+
+                  <small>
+
+                    {{
+                      formatDate(
+                        complaint.createdAt
+                      )
+                    }}
+
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- CATEGORY -->
+
+            <td>
+
+              <span class="category-pill">
+
+                {{
+                  complaint.category ||
+                  'Other'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- LOCATION -->
+
+            <td>
+
+              <div class="location-cell">
+
+                <span>
+                  📍
+                </span>
+
+                <span>
+
+                  {{
+                    complaint.location?.address ||
+                    'Location unavailable'
+                  }}
+
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- SEVERITY -->
+
+            <td>
+
+              <div class="severity-box">
+
+                <strong>
+                  {{
+                    complaint.severity ?? 0
+                  }}
+                </strong>
+
+                <span>
+                  /5
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- PRIORITY -->
+
+            <td>
+
+              <div class="priority-cell">
+
+                <span
+                  class="priority-badge"
+                  [ngClass]="
+                    getPriorityClass(
+                      getPriorityLevel(
+                        complaint
+                      )
+                    )
+                  "
+                >
+
+                  <span class="priority-dot"></span>
+
+                  {{
+                    getPriorityLevel(
+                      complaint
+                    )
+                  }}
+
+                </span>
+
+
+                <small>
+
+                  {{
+                    complaint.priorityScore ??
+                    0
+                  }}
+
+                  pts
+
+                </small>
+
+              </div>
+
+            </td>
+
+
+            <!-- AI SCORE -->
+
+            <td>
+
+              <div class="ai-score">
+
+                <span class="ai-star">
+                  ✦
+                </span>
+
+                <div>
+
+                  <strong>
+                    {{
+                      complaint.aiScore ??
+                      0
+                    }}
+                  </strong>
+
+                  <span>
+                    /100
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td>
+
+              <select
+                class="status-select"
+                [value]="
+                  complaint.status ||
+                  'Pending'
+                "
+                (change)="
+                  updateStatus(
+                    complaint._id,
+                    $event
+                  )
+                "
+              >
+
+                <option value="Pending">
+                  Pending
+                </option>
+
+                <option value="In Progress">
+                  In Progress
+                </option>
+
+                <option value="Resolved">
+                  Resolved
+                </option>
+
+              </select>
+
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+              <button
+                type="button"
+                class="view-button"
+                (click)="
+                  viewComplaint(
+                    complaint
+                  )
+                "
+              >
+
+                View
+
+                <span>
+                  →
+                </span>
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <!-- =================================================
+           EMPTY STATE
+      ================================================== -->
+
+      <div
+        class="empty-state"
+        *ngIf="
+          filteredComplaints.length === 0
+        "
+      >
+
+        <div class="empty-icon">
+          🔍
+        </div>
+
+        <h3>
+          No complaints found
+        </h3>
+
+        <p>
+          Try changing your search or filter settings.
+        </p>
+
+        <button
+          type="button"
+          (click)="clearFilters()"
+        >
+          Clear Filters
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     COMPLAINT DETAILS MODAL
+====================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedComplaint"
+  (click)="closeComplaintDetails()"
+>
+
+  <div
+    class="complaint-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+
+    <!-- MODAL HEADER -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <span class="modal-eyebrow">
+          COMPLAINT DETAILS
+        </span>
+
+        <h2>
+
+          {{
+            selectedComplaint.title ||
+            'Untitled Complaint'
+          }}
+
+        </h2>
+
+        <span class="modal-id">
+
+          Complaint ID:
+          {{
+            selectedComplaint._id ||
+            'N/A'
+          }}
+
+        </span>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeComplaintDetails()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- MODAL BODY -->
+
+    <div class="modal-body">
+
+
+      <!-- INFORMATION -->
+
+      <section class="detail-section">
+
+        <div class="section-title">
+
+          <div class="section-icon">
+            📋
+          </div>
+
+          <div>
+
+            <h3>
+              Complaint Information
+            </h3>
+
+            <span>
+              Basic case information
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="detail-grid">
+
+
+          <div class="detail-card">
+
+            <span>
+              Category
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.category ||
+                'Other'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="detail-card">
+
+            <span>
+              Severity
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.severity ??
+                0
+              }}
+
+              /5
+
+            </strong>
+
+          </div>
+
+
+          <div class="detail-card">
+
+            <span>
+              Status
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.status ||
+                'Pending'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="detail-card">
+
+            <span>
+              Priority
+            </span>
+
+            <strong
+              [ngClass]="
+                getPriorityClass(
+                  getPriorityLevel(
+                    selectedComplaint
+                  )
+                )
+              "
+            >
+
+              {{
+                getPriorityLevel(
+                  selectedComplaint
+                )
+              }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- DESCRIPTION -->
+
+      <section class="detail-section">
+
+        <div class="section-title">
+
+          <div class="section-icon">
+            📝
+          </div>
+
+          <div>
+
+            <h3>
+              Description
+            </h3>
+
+            <span>
+              Citizen's complaint
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="description-box">
+
+          {{
+            selectedComplaint.description ||
+            'No description provided.'
+          }}
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           COMPLAINT PHOTO
+      ================================================== -->
+
+      <section class="detail-section">
+
+        <div class="section-title">
+
+          <div class="section-icon">
+            📷
+          </div>
+
+          <div>
+
+            <h3>
+              Complaint Photo
+            </h3>
+
+            <span>
+              Evidence submitted by the citizen
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div
+          class="admin-photo-box"
+          *ngIf="selectedComplaint.photo"
+        >
+
+          <img
+            [src]="'http://localhost:5000' + selectedComplaint.photo"
+            [alt]="
+              selectedComplaint.title ||
+              'Complaint photo'
+            "
+          />
+
+        </div>
+
+
+        <!-- NO PHOTO -->
+
+        <div
+          class="admin-no-photo"
+          *ngIf="!selectedComplaint.photo"
+        >
+
+          <span>
+            ▧
+          </span>
+
+          No photo was attached to this complaint.
+
+        </div>
+
+      </section>
+
+
+      <!-- AI -->
+
+      <section class="ai-analysis">
+
+        <div class="ai-header">
+
+          <div class="ai-main-icon">
+            ✦
+          </div>
+
+          <div>
+
+            <h3>
+              AI Urgency Analysis
+            </h3>
+
+            <p>
+              Automated assessment of complaint urgency
+            </p>
+
+          </div>
+
+          <span class="ai-powered">
+            AI POWERED
+          </span>
+
+        </div>
+
+
+        <div class="ai-metrics">
+
+
+          <div class="ai-metric">
+
+            <span>
+              AI Score
+            </span>
+
+            <strong>
+              {{
+                selectedComplaint.aiScore ??
+                0
+              }}
+            </strong>
+
+            <small>
+              /100
+            </small>
+
+          </div>
+
+
+          <div class="ai-metric">
+
+            <span>
+              AI Level
+            </span>
+
+            <strong
+              [ngClass]="
+                getAILevelClass(
+                  selectedComplaint.aiLevel
+                )
+              "
+            >
+
+              {{
+                selectedComplaint.aiLevel ||
+                'Low'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="ai-metric">
+
+            <span>
+              Similar Cases
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.similarComplaints ??
+                0
+              }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- AI REASONS -->
+
+        <div class="ai-reasons">
+
+          <h4>
+            Why was this score assigned?
+          </h4>
+
+
+          <ul
+            *ngIf="
+              selectedComplaint.aiReasons &&
+              selectedComplaint.aiReasons.length > 0
+            "
+          >
+
+            <li
+              *ngFor="
+                let reason of selectedComplaint.aiReasons
+              "
+            >
+
+              {{ reason }}
+
+            </li>
+
+          </ul>
+
+
+          <div
+            class="no-reasons"
+            *ngIf="
+              !selectedComplaint.aiReasons ||
+              selectedComplaint.aiReasons.length === 0
+            "
+          >
+
+            No AI reasoning data available.
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- LOCATION -->
+
+      <section class="detail-section">
+
+        <div class="section-title">
+
+          <div class="section-icon">
+            📍
+          </div>
+
+          <div>
+
+            <h3>
+              Location
+            </h3>
+
+            <span>
+              Complaint location information
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="location-grid">
+
+
+          <div>
+
+            <span>
+              Address
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.location?.address ||
+                'N/A'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Latitude
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.location?.latitude ??
+                'N/A'
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Longitude
+            </span>
+
+            <strong>
+
+              {{
+                selectedComplaint.location?.longitude ??
+                'N/A'
+              }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SIMILAR -->
+
+      <section class="detail-section">
+
+        <div class="similar-card">
+
+          <div class="similar-icon">
+            🔁
+          </div>
+
+          <div>
+
+            <strong>
+
+              {{
+                selectedComplaint.similarComplaints ??
+                0
+              }}
+
+            </strong>
+
+            <span>
+              similar complaints detected
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="close-modal-button"
+        (click)="closeComplaintDetails()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

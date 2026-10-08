@@ -1,0 +1,993 @@
+<div class="complaints-page">
+
+  <!-- Background -->
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+  <div class="grid-bg"></div>
+
+
+  <!-- ========================================= -->
+  <!-- NAVBAR -->
+  <!-- ========================================= -->
+
+  <nav class="top-nav">
+
+    <div
+      class="brand"
+      routerLink="/citizen-dashboard"
+    >
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div>
+
+        <div class="brand-name">
+          CityFix
+        </div>
+
+        <div class="brand-subtitle">
+          CITIZEN PORTAL
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+      <a
+        routerLink="/citizen-dashboard"
+        class="nav-link"
+      >
+        Dashboard
+      </a>
+
+
+      <a
+        routerLink="/report-issue"
+        class="nav-link"
+      >
+        Report Issue
+      </a>
+
+
+      <button
+        class="refresh-btn"
+        type="button"
+        (click)="refreshComplaints()"
+        [disabled]="isLoading"
+      >
+
+        ↻
+
+        {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ========================================= -->
+  <!-- MAIN -->
+  <!-- ========================================= -->
+
+  <main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <section class="page-header">
+
+      <div>
+
+        <div class="eyebrow">
+          COMPLAINT HISTORY
+        </div>
+
+        <h1>
+          My Complaints
+        </h1>
+
+        <p>
+          Track the issues you have reported and monitor their progress.
+        </p>
+
+      </div>
+
+
+      <a
+        routerLink="/report-issue"
+        class="report-btn"
+      >
+
+        <span>
+          ＋
+        </span>
+
+        Report an Issue
+
+      </a>
+
+    </section>
+
+
+    <!-- ========================================= -->
+    <!-- LOADING -->
+    <!-- ========================================= -->
+
+    <section
+      class="loading-card"
+      *ngIf="isLoading"
+    >
+
+      <div class="loader"></div>
+
+      <h3>
+        Loading your complaints...
+      </h3>
+
+      <p>
+        Please wait while we fetch your complaint information.
+      </p>
+
+    </section>
+
+
+    <!-- ========================================= -->
+    <!-- ERROR -->
+    <!-- ========================================= -->
+
+    <section
+      class="error-card"
+      *ngIf="!isLoading && errorMessage"
+    >
+
+      <div class="error-icon">
+        !
+      </div>
+
+      <div>
+
+        <h3>
+          Something went wrong
+        </h3>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        (click)="refreshComplaints()"
+      >
+
+        Try Again
+
+      </button>
+
+    </section>
+
+
+    <!-- ========================================= -->
+    <!-- CONTENT -->
+    <!-- ========================================= -->
+
+    <div
+      *ngIf="!isLoading && !errorMessage"
+    >
+
+
+      <!-- ========================================= -->
+      <!-- STAT CARDS -->
+      <!-- ========================================= -->
+
+      <section class="stats-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon total-icon">
+            ▣
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-label">
+              TOTAL COMPLAINTS
+            </span>
+
+            <strong>
+              {{ totalComplaints }}
+            </strong>
+
+            <small>
+              Reports submitted
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon pending-icon">
+            ◷
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-label">
+              PENDING
+            </span>
+
+            <strong>
+              {{ pendingComplaints }}
+            </strong>
+
+            <small>
+              Awaiting action
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- IN PROGRESS -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon progress-icon">
+            ↻
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-label">
+              IN PROGRESS
+            </span>
+
+            <strong>
+              {{ inProgressComplaints }}
+            </strong>
+
+            <small>
+              Currently being handled
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESOLVED -->
+
+        <div class="stat-card">
+
+          <div class="stat-icon resolved-icon">
+            ✓
+          </div>
+
+          <div class="stat-content">
+
+            <span class="stat-label">
+              RESOLVED
+            </span>
+
+            <strong>
+              {{ resolvedComplaints }}
+            </strong>
+
+            <small>
+              Successfully completed
+            </small>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================================= -->
+      <!-- EMPTY STATE -->
+      <!-- ========================================= -->
+
+      <section
+        class="empty-state"
+        *ngIf="complaints.length === 0"
+      >
+
+        <div class="empty-icon">
+          ◎
+        </div>
+
+        <h2>
+          No complaints yet
+        </h2>
+
+        <p>
+          You haven't reported any civic issues yet.
+          Report an issue and it will appear here.
+        </p>
+
+
+        <a
+          routerLink="/report-issue"
+          class="empty-btn"
+        >
+
+          Report Your First Issue
+
+        </a>
+
+      </section>
+
+
+      <!-- ========================================= -->
+      <!-- COMPLAINT LIST -->
+      <!-- ========================================= -->
+
+      <section
+        class="complaints-section"
+        *ngIf="complaints.length > 0"
+      >
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-kicker">
+              YOUR REPORTS
+            </span>
+
+            <h2>
+              Reported Issues
+            </h2>
+
+            <p>
+              View the current status and details of your reported issues.
+            </p>
+
+          </div>
+
+
+          <div class="record-count">
+
+            {{ complaints.length }}
+
+            {{ complaints.length === 1 ? 'record' : 'records' }}
+
+          </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- COMPLAINT CARDS -->
+        <!-- ========================================= -->
+
+        <div class="complaints-list">
+
+          <article
+            class="complaint-card"
+            *ngFor="let complaint of complaints"
+          >
+
+
+            <!-- CARD TOP -->
+
+            <div class="complaint-top">
+
+              <div class="complaint-category">
+
+                <div class="category-icon">
+
+                  {{
+                    complaint.category === 'Garbage' ? '♻' :
+                    complaint.category === 'Road' ? '▰' :
+                    complaint.category === 'Water' ? '◉' :
+                    complaint.category === 'Electricity' ? '⚡' :
+                    complaint.category === 'Streetlight' ? '☼' :
+                    complaint.category === 'Drainage' ? '≋' :
+                    '!'
+                  }}
+
+                </div>
+
+
+                <div>
+
+                  <span class="category-label">
+                    {{ complaint.category || 'Other' }}
+                  </span>
+
+                  <span class="complaint-date">
+
+                    Reported on
+                    {{ formatDate(complaint.createdAt) }}
+
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- STATUS -->
+
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(getStatus(complaint))"
+              >
+
+                <span class="status-dot"></span>
+
+                {{ getStatus(complaint) }}
+
+              </span>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h3 class="complaint-title">
+
+              {{ complaint.title || 'Untitled Complaint' }}
+
+            </h3>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="complaint-description">
+
+              {{
+                complaint.description ||
+                'No description provided.'
+              }}
+
+            </p>
+
+
+            <!-- ========================================= -->
+            <!-- PHOTO -->
+            <!-- ========================================= -->
+
+            <div
+              class="complaint-photo"
+              *ngIf="complaint.photo"
+            >
+
+              <img
+                [src]="'http://localhost:5000' + complaint.photo"
+                [alt]="complaint.title || 'Complaint photo'"
+              />
+
+            </div>
+
+
+            <div
+              class="no-photo"
+              *ngIf="!complaint.photo"
+            >
+
+              <span>
+                ▧
+              </span>
+
+              No photo attached
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="location-row">
+
+              <span class="location-pin">
+                ●
+              </span>
+
+              <span>
+
+                {{
+                  complaint.location?.address ||
+                  complaint.location?.city ||
+                  'Location not provided'
+                }}
+
+              </span>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- BOTTOM INFO -->
+            <!-- ========================================= -->
+
+            <div class="complaint-footer">
+
+
+              <!-- SEVERITY -->
+
+              <div class="info-block">
+
+                <span class="info-label">
+                  SEVERITY
+                </span>
+
+                <div class="severity">
+
+                  <div class="severity-bars">
+
+                    <span
+                      *ngFor="let level of [1,2,3,4,5]"
+                      [class.active]="level <= (complaint.severity || 1)"
+                    >
+                    </span>
+
+                  </div>
+
+                  <strong>
+                    {{ complaint.severity || 1 }}/5
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <!-- AI SCORE -->
+
+              <div class="info-block">
+
+                <span class="info-label">
+                  AI SCORE
+                </span>
+
+                <strong class="ai-score">
+
+                  {{ complaint.aiScore || 0 }}/100
+
+                </strong>
+
+                <span class="ai-level">
+
+                  {{ getAILevel(complaint) }}
+
+                </span>
+
+              </div>
+
+
+              <!-- PRIORITY -->
+
+              <div class="info-block">
+
+                <span class="info-label">
+                  PRIORITY
+                </span>
+
+                <span
+                  class="priority-badge"
+                  [ngClass]="getPriorityClass(complaint)"
+                >
+
+                  {{ getPriorityLevel(complaint) }}
+
+                </span>
+
+              </div>
+
+
+              <!-- VIEW DETAILS -->
+
+              <button
+                type="button"
+                class="view-btn"
+                (click)="viewComplaint(complaint)"
+              >
+
+                View Details
+
+                <span>
+                  →
+                </span>
+
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- ========================================= -->
+  <!-- COMPLAINT DETAILS MODAL -->
+  <!-- ========================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showModal && selectedComplaint"
+    (click)="closeComplaint()"
+  >
+
+
+    <div
+      class="details-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <span class="modal-kicker">
+            COMPLAINT DETAILS
+          </span>
+
+          <h2>
+
+            {{
+              selectedComplaint.title ||
+              'Complaint Details'
+            }}
+
+          </h2>
+
+          <p>
+            Full information about your reported issue
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          (click)="closeComplaint()"
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <!-- MODAL STATUS -->
+
+      <div class="modal-status-row">
+
+        <span
+          class="status-badge large"
+          [ngClass]="
+            getStatusClass(
+              getStatus(selectedComplaint)
+            )
+          "
+        >
+
+          <span class="status-dot"></span>
+
+          {{ getStatus(selectedComplaint) }}
+
+        </span>
+
+
+        <span class="modal-date">
+
+          Reported
+          {{ formatDate(selectedComplaint.createdAt) }}
+
+        </span>
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div class="modal-description">
+
+        <span class="modal-label">
+          DESCRIPTION
+        </span>
+
+        <p>
+
+          {{
+            selectedComplaint.description ||
+            'No description provided.'
+          }}
+
+        </p>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- COMPLAINT PHOTO -->
+      <!-- ========================================= -->
+
+      <div class="modal-photo-section">
+
+        <span class="modal-label">
+          ATTACHED PHOTO
+        </span>
+
+
+        <div
+          class="modal-photo"
+          *ngIf="selectedComplaint.photo"
+        >
+
+          <img
+            [src]="'http://localhost:5000' + selectedComplaint.photo"
+            [alt]="
+              selectedComplaint.title ||
+              'Complaint photo'
+            "
+          />
+
+        </div>
+
+
+        <div
+          class="modal-no-photo"
+          *ngIf="!selectedComplaint.photo"
+        >
+
+          <span>
+            ▧
+          </span>
+
+          No photo was attached to this complaint.
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- DETAILS GRID -->
+      <!-- ========================================= -->
+
+      <div class="details-grid">
+
+
+        <!-- CATEGORY -->
+
+        <div class="detail-box">
+
+          <span class="detail-label">
+            CATEGORY
+          </span>
+
+          <strong>
+
+            {{
+              selectedComplaint.category ||
+              'Other'
+            }}
+
+          </strong>
+
+        </div>
+
+
+        <!-- SEVERITY -->
+
+        <div class="detail-box">
+
+          <span class="detail-label">
+            SEVERITY
+          </span>
+
+          <strong>
+
+            {{
+              selectedComplaint.severity ||
+              1
+            }}/5
+
+          </strong>
+
+        </div>
+
+
+        <!-- AI SCORE -->
+
+        <div class="detail-box">
+
+          <span class="detail-label">
+            AI SCORE
+          </span>
+
+          <strong>
+
+            {{
+              selectedComplaint.aiScore ||
+              0
+            }}/100
+
+          </strong>
+
+        </div>
+
+
+        <!-- PRIORITY -->
+
+        <div class="detail-box">
+
+          <span class="detail-label">
+            PRIORITY
+          </span>
+
+          <span
+            class="priority-badge"
+            [ngClass]="
+              getPriorityClass(selectedComplaint)
+            "
+          >
+
+            {{
+              getPriorityLevel(
+                selectedComplaint
+              )
+            }}
+
+          </span>
+
+        </div>
+
+
+        <!-- AI LEVEL -->
+
+        <div class="detail-box">
+
+          <span class="detail-label">
+            AI CLASSIFICATION
+          </span>
+
+          <strong>
+
+            {{
+              getAILevel(
+                selectedComplaint
+              )
+            }}
+
+          </strong>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="detail-box location-box">
+
+          <span class="detail-label">
+            LOCATION
+          </span>
+
+          <strong>
+
+            {{
+              selectedComplaint.location?.address ||
+              selectedComplaint.location?.city ||
+              'Location not provided'
+            }}
+
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- AI REASONS -->
+      <!-- ========================================= -->
+
+      <div
+        class="ai-reasons"
+        *ngIf="
+          selectedComplaint.aiReasons?.length
+        "
+      >
+
+        <span class="modal-label">
+          AI ANALYSIS
+        </span>
+
+
+        <div
+          class="reason"
+          *ngFor="
+            let reason of selectedComplaint.aiReasons
+          "
+        >
+
+          <span class="reason-icon">
+            ✦
+          </span>
+
+          <span>
+            {{ reason }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- COMPLAINT ID -->
+      <!-- ========================================= -->
+
+      <div class="complaint-id-box">
+
+        <span>
+          COMPLAINT ID
+        </span>
+
+        <code>
+
+          {{
+            selectedComplaint._id ||
+            selectedComplaint.id
+          }}
+
+        </code>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- MODAL FOOTER -->
+      <!-- ========================================= -->
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="close-btn"
+          (click)="closeComplaint()"
+        >
+
+          Close
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,2206 @@
+/* =====================================================
+   CITYFIX AI CHATBOT
+   DARK NEON PURPLE / GLASS THEME
+===================================================== */
+
+
+/* =====================================================
+   FLOATING LAUNCHER
+===================================================== */
+
+.chat-launcher {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  width: 64px;
+  height: 64px;
+
+  border: none;
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 9999;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d14cff,
+      #7924d8
+    );
+
+  box-shadow:
+    0 12px 35px
+    rgba(130, 35, 220, 0.42),
+
+    0 0 28px
+    rgba(200, 60, 255, 0.24);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.chat-launcher:hover {
+  transform:
+    translateY(-3px)
+    scale(1.03);
+
+  box-shadow:
+    0 16px 42px
+    rgba(130, 35, 220, 0.55),
+
+    0 0 34px
+    rgba(200, 60, 255, 0.32);
+}
+
+.chat-launcher.active {
+  transform: rotate(0deg);
+}
+
+.launcher-ring {
+  position: absolute;
+  inset: -5px;
+
+  border-radius: 24px;
+
+  border:
+    1px solid
+    rgba(213, 112, 255, 0.25);
+
+  pointer-events: none;
+}
+
+.launcher-logo {
+  position: relative;
+  z-index: 2;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.launcher-logo svg {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.launcher-status {
+  position: absolute;
+
+  right: 7px;
+  top: 7px;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #67e6b0;
+
+  border:
+    2px solid
+    #9d35df;
+
+  box-shadow:
+    0 0 9px
+    rgba(103, 230, 176, 0.8);
+}
+
+
+/* =====================================================
+   CHAT WRAPPER
+===================================================== */
+
+.chat-wrapper {
+  position: fixed;
+
+  right: 26px;
+  bottom: 102px;
+
+  z-index: 9998;
+}
+
+
+/* =====================================================
+   CHAT WINDOW
+===================================================== */
+
+.chat-window {
+  width: 390px;
+  height: 560px;
+  max-height: 560px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-radius: 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(26, 12, 39, 0.98),
+      rgba(7, 4, 13, 0.99)
+    );
+
+  border:
+    1px solid
+    rgba(205, 86, 255, 0.34);
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.55),
+
+    0 0 45px
+    rgba(166, 47, 240, 0.14);
+
+  animation:
+    chatOpen
+    0.25s ease-out;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.chat-header {
+  height: 76px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    0 17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(134, 39, 181, 0.32),
+      rgba(42, 17, 59, 0.2)
+    );
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+.assistant-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+.assistant-logo {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d050ff,
+      #7426d0
+    );
+
+  box-shadow:
+    0 0 22px
+    rgba(194, 64, 255, 0.28);
+}
+
+.assistant-logo svg {
+  width: 28px;
+  height: 28px;
+
+  fill: none;
+
+  stroke: white;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.assistant-name {
+  font-size: 15px;
+
+  font-weight: 750;
+
+  color: #ffffff;
+}
+
+.assistant-status {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  color:
+    rgba(255, 255, 255, 0.48);
+}
+
+.online-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #6ee4af;
+
+  box-shadow:
+    0 0 7px
+    rgba(110, 228, 175, 0.8);
+}
+
+
+/* =====================================================
+   HEADER BUTTONS
+===================================================== */
+
+.header-controls {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.clear-button,
+.close-button {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  color:
+    rgba(255, 255, 255, 0.75);
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  transition:
+    0.2s ease;
+}
+
+.clear-button:hover,
+.close-button:hover {
+  color: white;
+
+  background:
+    rgba(206, 73, 255, 0.18);
+}
+
+.clear-button {
+  font-size: 17px;
+}
+
+.close-button {
+  font-size: 21px;
+
+  line-height: 1;
+}
+
+
+/* =====================================================
+   CHAT BODY
+===================================================== */
+
+.chat-body {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+
+  padding:
+    18px 15px 12px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(205, 70, 255, 0.5)
+    transparent;
+}
+
+.chat-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chat-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background:
+    rgba(205, 70, 255, 0.45);
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+.welcome-area {
+  text-align: center;
+
+  padding:
+    8px 15px 18px;
+}
+
+.welcome-logo {
+  width: 56px;
+  height: 56px;
+
+  margin:
+    0 auto 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ce4fff,
+      #6e22ca
+    );
+
+  box-shadow:
+    0 0 28px
+    rgba(201, 67, 255, 0.25);
+}
+
+.welcome-logo svg {
+  width: 34px;
+  height: 34px;
+
+  fill: none;
+
+  stroke: white;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.welcome-eyebrow {
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+
+  color:
+    rgba(215, 134, 255, 0.72);
+}
+
+.welcome-area h2 {
+  margin:
+    6px 0 4px;
+
+  font-size: 21px;
+
+  color: white;
+}
+
+.welcome-area p {
+  max-width: 270px;
+
+  margin:
+    0 auto;
+
+  font-size: 10px;
+
+  line-height: 1.55;
+
+  color:
+    rgba(255, 255, 255, 0.48);
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.messages {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.message-row {
+  display: flex;
+
+  gap: 8px;
+
+  width: 100%;
+}
+
+.bot-row {
+  align-items: flex-start;
+}
+
+.user-row {
+  justify-content: flex-end;
+}
+
+.message-avatar {
+  width: 29px;
+  height: 29px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ce4dff,
+      #7124c8
+    );
+
+  box-shadow:
+    0 0 15px
+    rgba(194, 61, 255, 0.2);
+}
+
+.message-avatar svg {
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+
+  stroke: white;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.message-content {
+  max-width:
+    calc(100% - 40px);
+
+  min-width: 0;
+}
+
+.message-bubble {
+  padding:
+    10px 12px;
+
+  border-radius: 13px;
+
+  font-size: 10px;
+
+  line-height: 1.55;
+
+  word-break: break-word;
+}
+
+.bot-bubble {
+  color:
+    rgba(255, 255, 255, 0.82);
+
+  background:
+    rgba(255, 255, 255, 0.075);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+
+  border-top-left-radius: 4px;
+}
+
+.user-bubble {
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(179, 57, 237, 0.9),
+      rgba(110, 31, 180, 0.9)
+    );
+
+  border:
+    1px solid
+    rgba(213, 94, 255, 0.25);
+
+  border-top-right-radius: 4px;
+}
+
+.message-time {
+  display: block;
+
+  margin-top: 4px;
+
+  padding:
+    0 3px;
+
+  font-size: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.28);
+}
+
+
+/* =====================================================
+   CITIZEN COMPLAINTS CARD
+===================================================== */
+
+.citizen-complaints-card {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 15px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(39, 17, 57, 0.99),
+      rgba(11, 6, 19, 0.99)
+    );
+
+  border:
+    1px solid
+    rgba(201, 75, 255, 0.38);
+
+  box-shadow:
+    0 15px 38px
+    rgba(0, 0, 0, 0.35),
+
+    0 0 28px
+    rgba(174, 48, 255, 0.10);
+
+  animation:
+    complaintCardIn
+    0.3s ease-out;
+}
+
+
+/* =====================================================
+   CITIZEN CARD HEADER
+===================================================== */
+
+.citizen-complaints-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding-bottom: 12px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+.citizen-card-eyebrow {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color:
+    #d17aff;
+}
+
+.citizen-complaints-header h3 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 750;
+
+  color: #ffffff;
+}
+
+.complaints-count {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #c948ff,
+      #7525c9
+    );
+
+  border:
+    1px solid
+    rgba(235, 145, 255, 0.25);
+
+  box-shadow:
+    0 0 18px
+    rgba(198, 65, 255, 0.30);
+}
+
+
+/* =====================================================
+   CITIZEN INTRO
+===================================================== */
+
+.citizen-complaints-intro {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 7px;
+
+  margin-top: 11px;
+
+  padding: 9px;
+
+  border-radius: 10px;
+
+  background:
+    rgba(180, 60, 240, 0.07);
+
+  border:
+    1px solid
+    rgba(190, 70, 255, 0.12);
+
+  font-size: 8px;
+
+  line-height: 1.5;
+
+  color:
+    rgba(255, 255, 255, 0.58);
+}
+
+.citizen-complaints-intro > span {
+  flex-shrink: 0;
+
+  color:
+    #d25aff;
+}
+
+
+/* =====================================================
+   COMPLAINT LIST
+===================================================== */
+
+.citizen-complaint-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 11px;
+}
+
+
+/* =====================================================
+   COMPLAINT ITEM
+   IMPORTANT:
+   Explicitly reset button styles so global CSS
+   cannot make the cards white.
+===================================================== */
+
+.citizen-complaint-item {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  display: block;
+
+  margin: 0;
+
+  padding: 12px;
+
+  text-align: left;
+
+  appearance: none;
+
+  -webkit-appearance: none;
+
+  font-family: inherit;
+
+  border-radius: 13px;
+
+  border:
+    1px solid
+    rgba(206, 83, 255, 0.18);
+
+  outline: none;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(43, 19, 61, 0.96),
+      rgba(19, 9, 29, 0.98)
+    );
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.035),
+
+    0 6px 18px
+    rgba(0, 0, 0, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.citizen-complaint-item:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(59, 23, 80, 0.98),
+      rgba(24, 10, 37, 0.99)
+    );
+
+  border-color:
+    rgba(211, 91, 255, 0.48);
+
+  box-shadow:
+    0 9px 25px
+    rgba(0, 0, 0, 0.30),
+
+    0 0 20px
+    rgba(186, 54, 255, 0.09);
+}
+
+.citizen-complaint-item:focus {
+  outline: none;
+
+  border-color:
+    rgba(216, 96, 255, 0.55);
+
+  box-shadow:
+    0 0 0 2px
+    rgba(192, 65, 255, 0.12),
+
+    0 8px 24px
+    rgba(0, 0, 0, 0.28);
+}
+
+.citizen-complaint-item:active {
+  transform:
+    translateY(0);
+}
+
+
+/* =====================================================
+   ITEM TOP
+===================================================== */
+
+.citizen-item-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+}
+
+.citizen-item-number {
+  font-size: 7px;
+
+  font-weight: 750;
+
+  letter-spacing: 0.8px;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+.citizen-item-number span {
+  color:
+    #ca51ff;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.citizen-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding:
+    4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 7px;
+
+  font-weight: 750;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+.citizen-status .status-dot {
+  width: 5px;
+  height: 5px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    currentColor;
+
+  box-shadow:
+    0 0 6px
+    currentColor;
+}
+
+.citizen-status.pending {
+  color:
+    #f3c86a;
+}
+
+.citizen-status.in-progress {
+  color:
+    #7bc8ff;
+}
+
+.citizen-status.resolved {
+  color:
+    #70dfaf;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.citizen-item-title {
+  margin-top: 10px;
+
+  font-size: 10px;
+
+  line-height: 1.45;
+
+  font-weight: 700;
+
+  color:
+    rgba(255, 255, 255, 0.92);
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   DETAILS GRID
+===================================================== */
+
+.citizen-item-details {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 6px;
+
+  margin-top: 10px;
+}
+
+.citizen-item-details > div {
+  min-width: 0;
+
+  padding: 8px;
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+}
+
+.citizen-item-details span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 6px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+.citizen-item-details strong {
+  display: block;
+
+  font-size: 8px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  color:
+    rgba(255, 255, 255, 0.84);
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   PRIORITY COLORS
+===================================================== */
+
+.citizen-item-details strong.low {
+  color:
+    #8fe0b9;
+}
+
+.citizen-item-details strong.medium {
+  color:
+    #f3ca6b;
+}
+
+.citizen-item-details strong.high {
+  color:
+    #ff9a78;
+}
+
+.citizen-item-details strong.critical {
+  color:
+    #ff668f;
+}
+
+
+/* =====================================================
+   LOCATION
+===================================================== */
+
+.citizen-item-location {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 5px;
+
+  margin-top: 8px;
+
+  font-size: 7px;
+
+  line-height: 1.4;
+
+  color:
+    rgba(255, 255, 255, 0.46);
+
+  overflow-wrap: anywhere;
+}
+
+.citizen-item-location > span:first-child {
+  flex-shrink: 0;
+
+  color:
+    #c951ff;
+}
+
+
+/* =====================================================
+   ITEM FOOTER
+===================================================== */
+
+.citizen-item-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 9px;
+
+  padding-top: 8px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  font-size: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.42);
+}
+
+.item-arrow {
+  font-size: 13px;
+
+  color:
+    #d15aff;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.citizen-complaint-item:hover
+.item-arrow {
+  transform:
+    translateX(3px);
+}
+
+
+/* =====================================================
+   CITIZEN CARD FOOTER
+===================================================== */
+
+.citizen-complaints-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 11px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.05);
+
+  font-size: 7px;
+
+  line-height: 1.4;
+
+  text-align: center;
+
+  color:
+    rgba(255, 255, 255, 0.30);
+}
+
+.citizen-complaints-footer span {
+  color:
+    #c951ff;
+}
+
+
+/* =====================================================
+   COMPLAINT RESULT CARD
+===================================================== */
+
+.complaint-result-card {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 15px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(39, 17, 57, 0.98),
+      rgba(16, 8, 27, 0.98)
+    );
+
+  border:
+    1px solid
+    rgba(201, 75, 255, 0.35);
+
+  box-shadow:
+    0 15px 38px
+    rgba(0, 0, 0, 0.3),
+
+    0 0 25px
+    rgba(174, 48, 255, 0.08);
+
+  animation:
+    complaintCardIn
+    0.3s ease-out;
+}
+
+
+/* =====================================================
+   COMPLAINT CARD HEADER
+===================================================== */
+
+.complaint-card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding-bottom: 12px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+.complaint-card-eyebrow {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color:
+    rgba(216, 138, 255, 0.72);
+}
+
+.complaint-card-header h3 {
+  margin: 0;
+
+  font-size: 15px;
+
+  color: white;
+}
+
+.analysis-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #c948ff,
+      #7525c9
+    );
+
+  color: white;
+
+  box-shadow:
+    0 0 17px
+    rgba(198, 65, 255, 0.3);
+}
+
+
+/* =====================================================
+   STATUS / PRIORITY
+===================================================== */
+
+.complaint-status-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 9px;
+
+  margin-top: 13px;
+}
+
+.field-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.1px;
+
+  color:
+    rgba(205, 187, 215, 0.52);
+}
+
+.status-pill,
+.priority-pill {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-height: 27px;
+
+  padding:
+    4px 9px;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+
+  font-weight: 750;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+}
+
+.status-pill .status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  box-shadow:
+    0 0 7px currentColor;
+}
+
+.status-pill.pending {
+  color: #f3c86a;
+}
+
+.status-pill.in-progress {
+  color: #7bc8ff;
+}
+
+.status-pill.resolved {
+  color: #70dfaf;
+}
+
+.priority-pill.low {
+  color: #8fe0b9;
+}
+
+.priority-pill.medium {
+  color: #f3ca6b;
+}
+
+.priority-pill.high {
+  color: #ff9a78;
+}
+
+.priority-pill.critical {
+  color: #ff668f;
+}
+
+
+/* =====================================================
+   AI SCORE
+===================================================== */
+
+.ai-score-section {
+  margin-top: 12px;
+
+  padding: 12px;
+
+  border-radius: 13px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+}
+
+.score-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.score-number {
+  font-size: 23px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: white;
+}
+
+.score-number span {
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color:
+    rgba(255, 255, 255, 0.4);
+}
+
+.score-ring {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  background:
+    rgba(180, 55, 255, 0.1);
+
+  border:
+    2px solid currentColor;
+}
+
+.score-ring.low {
+  color: #8fe1ba;
+}
+
+.score-ring.medium {
+  color: #f3ca6c;
+}
+
+.score-ring.high {
+  color: #ff9b79;
+}
+
+.score-ring.critical {
+  color: #ff668f;
+}
+
+.score-track {
+  height: 5px;
+
+  margin-top: 11px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+.score-fill {
+  height: 100%;
+
+  min-width: 3px;
+
+  border-radius: inherit;
+
+  transition:
+    width 0.5s ease;
+}
+
+.score-fill.low {
+  background:
+    linear-gradient(
+      90deg,
+      #5bc99a,
+      #8fe1ba
+    );
+}
+
+.score-fill.medium {
+  background:
+    linear-gradient(
+      90deg,
+      #d7a843,
+      #f3ca6c
+    );
+}
+
+.score-fill.high {
+  background:
+    linear-gradient(
+      90deg,
+      #e97859,
+      #ff9b79
+    );
+}
+
+.score-fill.critical {
+  background:
+    linear-gradient(
+      90deg,
+      #e7436c,
+      #ff668f
+    );
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.complaint-details-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 8px;
+
+  margin-top: 11px;
+}
+
+.detail-item {
+  min-width: 0;
+
+  padding: 9px;
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.045);
+}
+
+.detail-item.full {
+  grid-column:
+    1 / -1;
+}
+
+.detail-item strong {
+  display: block;
+
+  font-size: 9px;
+
+  line-height: 1.4;
+
+  font-weight: 650;
+
+  color:
+    rgba(255, 255, 255, 0.88);
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   AI SECTIONS
+===================================================== */
+
+.analysis-section {
+  margin-top: 11px;
+
+  padding-top: 12px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+.section-title {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+}
+
+.section-icon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background:
+    rgba(186, 61, 255, 0.13);
+
+  color:
+    #d15aff;
+
+  font-size: 10px;
+}
+
+.section-title > div > span {
+  display: block;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color:
+    rgba(255, 255, 255, 0.78);
+}
+
+.section-title small {
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+
+/* =====================================================
+   REASONS
+===================================================== */
+
+.reason-list {
+  margin-top: 8px;
+}
+
+.reason-item {
+  display: flex;
+
+  gap: 6px;
+
+  padding: 7px;
+
+  margin-bottom: 4px;
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  font-size: 8px;
+
+  line-height: 1.45;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+}
+
+.reason-item > span {
+  flex-shrink: 0;
+
+  color:
+    #c950ff;
+
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   FACTORS
+===================================================== */
+
+.factor-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 8px;
+}
+
+.factor-chip {
+  padding:
+    5px 7px;
+
+  border-radius: 999px;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  color:
+    #dca1ff;
+
+  background:
+    rgba(179, 55, 255, 0.1);
+
+  border:
+    1px solid
+    rgba(179, 55, 255, 0.22);
+}
+
+
+/* =====================================================
+   RECOMMENDATION
+===================================================== */
+
+.recommendation {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 11px;
+
+  padding: 10px;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(157, 47, 222, 0.12),
+      rgba(82, 25, 115, 0.08)
+    );
+
+  border:
+    1px solid
+    rgba(190, 66, 255, 0.18);
+}
+
+.recommendation-icon {
+  width: 25px;
+  height: 25px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  background:
+    rgba(198, 67, 255, 0.16);
+
+  color:
+    #dc72ff;
+
+  font-weight: 800;
+}
+
+.recommendation > div:last-child > span {
+  display: block;
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+}
+
+.recommendation p {
+  margin:
+    4px 0 0;
+
+  font-size: 8px;
+
+  line-height: 1.45;
+
+  color:
+    rgba(255, 255, 255, 0.78);
+}
+
+
+/* =====================================================
+   COMPLAINT CARD FOOTER
+===================================================== */
+
+.complaint-card-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 11px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.05);
+
+  font-size: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.3);
+}
+
+.complaint-card-footer span {
+  color:
+    #c951ff;
+}
+
+
+/* =====================================================
+   QUICK QUESTIONS
+===================================================== */
+
+.quick-section {
+  margin-top: 15px;
+}
+
+.quick-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-bottom: 7px;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  color:
+    rgba(255, 255, 255, 0.4);
+}
+
+.quick-heading span {
+  color:
+    #d04dff;
+}
+
+.quick-buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.quick-buttons button {
+  padding:
+    7px 9px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid
+    rgba(201, 70, 255, 0.2);
+
+  background:
+    rgba(173, 54, 237, 0.07);
+
+  color:
+    rgba(255, 255, 255, 0.65);
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.quick-buttons button:hover {
+  color: white;
+
+  background:
+    rgba(190, 60, 255, 0.16);
+
+  border-color:
+    rgba(211, 87, 255, 0.4);
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+.action-section {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 6px;
+
+  margin-top: 12px;
+}
+
+.action-card {
+  min-width: 0;
+
+  padding:
+    9px 5px;
+
+  border-radius: 11px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.065);
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  color:
+    rgba(255, 255, 255, 0.65);
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.action-card:hover {
+  color: white;
+
+  border-color:
+    rgba(204, 76, 255, 0.3);
+
+  background:
+    rgba(177, 52, 239, 0.1);
+}
+
+.action-icon {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 13px;
+
+  color:
+    #d25aff;
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.chat-input-area {
+  flex-shrink: 0;
+
+  padding:
+    10px 14px 12px;
+
+  background:
+    rgba(8, 4, 14, 0.96);
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+.input-container {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding:
+    4px 5px 4px 11px;
+
+  border-radius: 14px;
+
+  border:
+    1px solid
+    rgba(206, 78, 255, 0.34);
+
+  background:
+    rgba(255, 255, 255, 0.035);
+}
+
+.input-container:focus-within {
+  border-color:
+    rgba(214, 86, 255, 0.7);
+
+  box-shadow:
+    0 0 15px
+    rgba(195, 63, 255, 0.1);
+}
+
+.input-container input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: white;
+
+  font-size: 10px;
+}
+
+.input-container input::placeholder {
+  color:
+    rgba(255, 255, 255, 0.32);
+}
+
+.send-button {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ce4aff,
+      #7926d5
+    );
+
+  box-shadow:
+    0 0 13px
+    rgba(197, 65, 255, 0.25);
+}
+
+.send-button:disabled {
+  opacity: 0.35;
+
+  cursor: default;
+
+  box-shadow: none;
+}
+
+.send-button span {
+  font-size: 17px;
+
+  line-height: 1;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.chat-footer-text {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  margin-top: 7px;
+
+  font-size: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.25);
+}
+
+.chat-footer-text span {
+  color:
+    #c950ff;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes chatOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+@keyframes complaintCardIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(7px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .chat-wrapper {
+    right: 12px;
+
+    bottom: 88px;
+
+    left: 12px;
+  }
+
+  .chat-window {
+    width: 100%;
+
+    height: 540px;
+
+    max-height: 540px;
+
+    border-radius: 21px;
+  }
+
+  .chat-launcher {
+    right: 18px;
+
+    bottom: 18px;
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 18px;
+  }
+
+  .complaint-result-card {
+    padding: 13px;
+  }
+
+  .citizen-complaints-card {
+    padding: 13px;
+  }
+
+  .citizen-complaint-item {
+    padding: 11px;
+  }
+
+  .citizen-item-details {
+    grid-template-columns:
+      1fr;
+  }
+
+  .complaint-details-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .detail-item.full {
+    grid-column:
+      auto;
+  }
+
+}

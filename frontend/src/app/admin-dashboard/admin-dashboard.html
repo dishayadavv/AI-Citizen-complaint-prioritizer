@@ -1,0 +1,1187 @@
+<div class="dashboard-page">
+
+
+  <!-- =================================================
+       HEADER
+  ================================================== -->
+
+  <header class="dashboard-header">
+
+    <div>
+
+      <span class="eyebrow">
+        ADMINISTRATION
+      </span>
+
+      <h1>
+        CityFix Dashboard
+      </h1>
+
+      <p>
+        Get a quick overview of citizen complaints,
+        priorities and resolution progress.
+      </p>
+
+    </div>
+
+
+    <!-- =================================================
+         HEADER ACTIONS
+    ================================================== -->
+
+    <div class="header-actions">
+
+      <!-- REFRESH -->
+
+      <button
+        type="button"
+        class="refresh-button"
+        (click)="refreshDashboard()"
+        [disabled]="isLoading"
+      >
+
+        ↻
+
+        {{
+          isLoading
+            ? 'Loading...'
+            : 'Refresh Dashboard'
+        }}
+
+      </button>
+
+
+      <!-- LOGOUT -->
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+      >
+
+        ⇥
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =================================================
+       ERROR
+  ================================================== -->
+
+  <div
+    class="error-card"
+    *ngIf="!isLoading && errorMessage"
+  >
+
+    <span>
+      ⚠️
+    </span>
+
+    <div>
+
+      <strong>
+        Unable to load dashboard
+      </strong>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       LOADING
+  ================================================== -->
+
+  <div
+    class="loading-card"
+    *ngIf="isLoading"
+  >
+
+    <div class="loading-icon">
+      ⏳
+    </div>
+
+    <h3>
+      Loading CityFix dashboard...
+    </h3>
+
+    <p>
+      Fetching the latest complaint information.
+    </p>
+
+  </div>
+
+
+  <!-- =================================================
+       DASHBOARD CONTENT
+  ================================================== -->
+
+  <main
+    *ngIf="!isLoading && !errorMessage"
+  >
+
+
+    <!-- ===============================================
+         WELCOME CARD
+    ================================================ -->
+
+    <section class="welcome-card">
+
+      <div>
+
+        <span class="welcome-label">
+          CITYFIX ADMINISTRATION
+        </span>
+
+        <h2>
+          Welcome back, Administrator 👋
+        </h2>
+
+        <p>
+          Here's what's happening with citizen
+          complaints today.
+        </p>
+
+      </div>
+
+
+      <div class="welcome-icon">
+        🏙️
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         OVERVIEW STATS
+    ================================================ -->
+
+    <section class="overview-grid">
+
+
+      <!-- TOTAL -->
+
+      <div class="overview-card blue">
+
+        <div class="overview-icon">
+          📋
+        </div>
+
+        <div>
+
+          <span>
+            Total Complaints
+          </span>
+
+          <strong>
+            {{ totalComplaints }}
+          </strong>
+
+          <small>
+            All reported issues
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- CRITICAL -->
+
+      <div class="overview-card red">
+
+        <div class="overview-icon">
+          🚨
+        </div>
+
+        <div>
+
+          <span>
+            Critical
+          </span>
+
+          <strong>
+            {{ getCount('Critical') }}
+          </strong>
+
+          <small>
+            Require urgent attention
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- PENDING -->
+
+      <div class="overview-card orange">
+
+        <div class="overview-icon">
+          ⏳
+        </div>
+
+        <div>
+
+          <span>
+            Pending
+          </span>
+
+          <strong>
+            {{ getStatusCount('Pending') }}
+          </strong>
+
+          <small>
+            Awaiting action
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESOLVED -->
+
+      <div class="overview-card green">
+
+        <div class="overview-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <span>
+            Resolved
+          </span>
+
+          <strong>
+            {{ getStatusCount('Resolved') }}
+          </strong>
+
+          <small>
+            Successfully completed
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         TWO COLUMN ANALYSIS
+    ================================================ -->
+
+    <section class="analysis-grid">
+
+
+      <!-- =============================================
+           PRIORITY OVERVIEW
+      ============================================== -->
+
+      <div class="dashboard-card">
+
+        <div class="card-heading">
+
+          <div>
+
+            <span class="card-label">
+              PRIORITY
+            </span>
+
+            <h2>
+              Complaint Priority
+            </h2>
+
+            <p>
+              Current distribution of complaint urgency.
+            </p>
+
+          </div>
+
+          <span class="heading-icon">
+            🎯
+          </span>
+
+        </div>
+
+
+        <div class="priority-list">
+
+
+          <!-- CRITICAL -->
+
+          <div class="priority-row">
+
+            <div class="priority-info">
+
+              <span class="priority-name critical">
+                <i></i>
+                Critical
+              </span>
+
+              <strong>
+                {{ getCount('Critical') }}
+              </strong>
+
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill critical"
+                [style.width.%]="
+                  getPriorityPercentage('Critical')
+                "
+              ></div>
+
+            </div>
+
+            <small>
+              {{
+                getPriorityPercentage('Critical')
+              }}%
+            </small>
+
+          </div>
+
+
+          <!-- HIGH -->
+
+          <div class="priority-row">
+
+            <div class="priority-info">
+
+              <span class="priority-name high">
+                <i></i>
+                High
+              </span>
+
+              <strong>
+                {{ getCount('High') }}
+              </strong>
+
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill high"
+                [style.width.%]="
+                  getPriorityPercentage('High')
+                "
+              ></div>
+
+            </div>
+
+            <small>
+              {{
+                getPriorityPercentage('High')
+              }}%
+            </small>
+
+          </div>
+
+
+          <!-- MEDIUM -->
+
+          <div class="priority-row">
+
+            <div class="priority-info">
+
+              <span class="priority-name medium">
+                <i></i>
+                Medium
+              </span>
+
+              <strong>
+                {{ getCount('Medium') }}
+              </strong>
+
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill medium"
+                [style.width.%]="
+                  getPriorityPercentage('Medium')
+                "
+              ></div>
+
+            </div>
+
+            <small>
+              {{
+                getPriorityPercentage('Medium')
+              }}%
+            </small>
+
+          </div>
+
+
+          <!-- LOW -->
+
+          <div class="priority-row">
+
+            <div class="priority-info">
+
+              <span class="priority-name low">
+                <i></i>
+                Low
+              </span>
+
+              <strong>
+                {{ getCount('Low') }}
+              </strong>
+
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill low"
+                [style.width.%]="
+                  getPriorityPercentage('Low')
+                "
+              ></div>
+
+            </div>
+
+            <small>
+              {{
+                getPriorityPercentage('Low')
+              }}%
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =============================================
+           STATUS OVERVIEW
+      ============================================== -->
+
+      <div class="dashboard-card">
+
+        <div class="card-heading">
+
+          <div>
+
+            <span class="card-label">
+              RESOLUTION
+            </span>
+
+            <h2>
+              Complaint Status
+            </h2>
+
+            <p>
+              Current progress of reported issues.
+            </p>
+
+          </div>
+
+          <span class="heading-icon">
+            📌
+          </span>
+
+        </div>
+
+
+        <div class="status-overview">
+
+
+          <!-- PENDING -->
+
+          <div class="status-item">
+
+            <div class="status-icon pending">
+              ⏳
+            </div>
+
+            <div class="status-content">
+
+              <div>
+
+                <strong>
+                  Pending
+                </strong>
+
+                <span>
+                  {{ getStatusCount('Pending') }}
+                </span>
+
+              </div>
+
+              <div class="status-track">
+
+                <div
+                  class="status-fill pending"
+                  [style.width.%]="
+                    getStatusPercentage('Pending')
+                  "
+                ></div>
+
+              </div>
+
+              <small>
+                {{
+                  getStatusPercentage('Pending')
+                }}% of complaints
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <!-- IN PROGRESS -->
+
+          <div class="status-item">
+
+            <div class="status-icon progress">
+              🔄
+            </div>
+
+            <div class="status-content">
+
+              <div>
+
+                <strong>
+                  In Progress
+                </strong>
+
+                <span>
+                  {{ getStatusCount('In Progress') }}
+                </span>
+
+              </div>
+
+              <div class="status-track">
+
+                <div
+                  class="status-fill progress"
+                  [style.width.%]="
+                    getStatusPercentage('In Progress')
+                  "
+                ></div>
+
+              </div>
+
+              <small>
+                {{
+                  getStatusPercentage('In Progress')
+                }}% of complaints
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <!-- RESOLVED -->
+
+          <div class="status-item">
+
+            <div class="status-icon resolved">
+              ✓
+            </div>
+
+            <div class="status-content">
+
+              <div>
+
+                <strong>
+                  Resolved
+                </strong>
+
+                <span>
+                  {{ getStatusCount('Resolved') }}
+                </span>
+
+              </div>
+
+              <div class="status-track">
+
+                <div
+                  class="status-fill resolved"
+                  [style.width.%]="
+                    getStatusPercentage('Resolved')
+                  "
+                ></div>
+
+              </div>
+
+              <small>
+                {{
+                  getStatusPercentage('Resolved')
+                }}% of complaints
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         CATEGORY + QUICK ACTIONS
+    ================================================ -->
+
+    <section class="bottom-grid">
+
+
+      <!-- =============================================
+           TOP CATEGORIES
+      ============================================== -->
+
+      <div class="dashboard-card">
+
+        <div class="card-heading">
+
+          <div>
+
+            <span class="card-label">
+              CATEGORIES
+            </span>
+
+            <h2>
+              Most Reported Issues
+            </h2>
+
+            <p>
+              Categories receiving the most complaints.
+            </p>
+
+          </div>
+
+          <span class="heading-icon">
+            📊
+          </span>
+
+        </div>
+
+
+        <div
+          class="category-list"
+          *ngIf="categories.length > 0"
+        >
+
+          <div
+            class="category-item"
+            *ngFor="let category of categories"
+          >
+
+            <div class="category-top">
+
+              <span>
+                {{ category.name }}
+              </span>
+
+              <strong>
+                {{ category.count }}
+              </strong>
+
+            </div>
+
+            <div class="category-track">
+
+              <div
+                class="category-fill"
+                [style.width.%]="
+                  getCategoryPercentage(
+                    category.count
+                  )
+                "
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="empty-small"
+          *ngIf="categories.length === 0"
+        >
+          No category information available.
+        </div>
+
+      </div>
+
+
+      <!-- =============================================
+           QUICK ACTIONS
+      ============================================== -->
+
+      <div class="dashboard-card">
+
+        <div class="card-heading">
+
+          <div>
+
+            <span class="card-label">
+              MANAGEMENT
+            </span>
+
+            <h2>
+              Quick Actions
+            </h2>
+
+            <p>
+              Quickly access important CityFix tools.
+            </p>
+
+          </div>
+
+          <span class="heading-icon">
+            ⚡
+          </span>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+
+          <!-- =========================================
+               MANAGE COMPLAINTS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-complaints"
+            class="quick-action"
+          >
+
+            <span class="quick-icon blue">
+              📋
+            </span>
+
+            <span>
+
+              <strong>
+                Manage Complaints
+              </strong>
+
+              <small>
+                View and update complaint records
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               AI ANALYSIS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-ai-analysis"
+            class="quick-action"
+          >
+
+            <span class="quick-icon purple">
+              🤖
+            </span>
+
+            <span>
+
+              <strong>
+                AI Analysis
+              </strong>
+
+              <small>
+                Review AI urgency insights
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               ANALYTICS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-analytics"
+            class="quick-action"
+          >
+
+            <span class="quick-icon orange">
+              📊
+            </span>
+
+            <span>
+
+              <strong>
+                View Analytics
+              </strong>
+
+              <small>
+                Explore complaint statistics
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               MAP
+          ========================================== -->
+
+          <a
+            routerLink="/admin-map"
+            class="quick-action"
+          >
+
+            <span class="quick-icon green">
+              📍
+            </span>
+
+            <span>
+
+              <strong>
+                Complaint Map
+              </strong>
+
+              <small>
+                View issues by location
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               CITIZENS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-citizens"
+            class="quick-action"
+          >
+
+            <span class="quick-icon blue">
+              👥
+            </span>
+
+            <span>
+
+              <strong>
+                Citizens
+              </strong>
+
+              <small>
+                View and manage citizens
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               LOCATIONS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-locations"
+            class="quick-action"
+          >
+
+            <span class="quick-icon green">
+              🗺️
+            </span>
+
+            <span>
+
+              <strong>
+                Locations
+              </strong>
+
+              <small>
+                Manage complaint locations
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+          <!-- =========================================
+               SETTINGS
+          ========================================== -->
+
+          <a
+            routerLink="/admin-settings"
+            class="quick-action"
+          >
+
+            <span class="quick-icon orange">
+              ⚙️
+            </span>
+
+            <span>
+
+              <strong>
+                Settings
+              </strong>
+
+              <small>
+                Manage CityFix settings
+              </small>
+
+            </span>
+
+            <b>
+              →
+            </b>
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         RECENT COMPLAINTS
+    ================================================ -->
+
+    <section class="dashboard-card recent-card">
+
+      <div class="card-heading">
+
+        <div>
+
+          <span class="card-label">
+            RECENT ACTIVITY
+          </span>
+
+          <h2>
+            Recent Complaints
+          </h2>
+
+          <p>
+            Latest complaints submitted by citizens.
+          </p>
+
+        </div>
+
+
+        <a
+          routerLink="/admin-complaints"
+          class="view-all"
+        >
+          View All →
+        </a>
+
+      </div>
+
+
+      <div
+        class="recent-list"
+        *ngIf="recentComplaints.length > 0"
+      >
+
+        <div
+          class="recent-row"
+          *ngFor="
+            let complaint of recentComplaints
+          "
+        >
+
+
+          <!-- ICON -->
+
+          <div class="recent-avatar">
+
+            {{
+              (
+                complaint.title ||
+                'C'
+              )
+              .charAt(0)
+              .toUpperCase()
+            }}
+
+          </div>
+
+
+          <!-- INFORMATION -->
+
+          <div class="recent-info">
+
+            <strong>
+
+              {{
+                complaint.title ||
+                'Untitled Complaint'
+              }}
+
+            </strong>
+
+            <span>
+
+              {{
+                complaint.category ||
+                'Other'
+              }}
+
+              ·
+
+              {{
+                complaint.location?.address ||
+                'Location unavailable'
+              }}
+
+            </span>
+
+          </div>
+
+
+          <!-- PRIORITY -->
+
+          <span
+            class="priority-badge"
+            [ngClass]="
+              getPriorityClass(complaint)
+            "
+          >
+
+            {{ getPriorityLevel(complaint) }}
+
+          </span>
+
+
+          <!-- STATUS -->
+
+          <span
+            class="status-badge"
+            [ngClass]="
+              getStatusClass(
+                complaint.status
+              )
+            "
+          >
+
+            {{
+              complaint.status ||
+              'Pending'
+            }}
+
+          </span>
+
+
+          <!-- DATE -->
+
+          <span class="recent-date">
+
+            {{
+              formatDate(
+                complaint.createdAt
+              )
+            }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="empty-small"
+        *ngIf="recentComplaints.length === 0"
+      >
+
+        No complaints have been submitted yet.
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         FOOTER INSIGHT
+    ================================================ -->
+
+    <section class="insight-banner">
+
+      <div class="insight-icon">
+        💡
+      </div>
+
+      <div>
+
+        <strong>
+          CityFix Intelligence
+        </strong>
+
+        <p>
+          Use AI Analysis and Analytics to identify
+          urgent citizen issues and help administrators
+          prioritize cases that require immediate attention.
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+</div>

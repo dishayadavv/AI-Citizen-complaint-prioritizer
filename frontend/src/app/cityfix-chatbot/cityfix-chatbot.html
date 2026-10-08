@@ -1,0 +1,1022 @@
+<!-- =====================================================
+     FLOATING CHAT BUTTON
+===================================================== -->
+
+<button
+  type="button"
+  class="chat-launcher"
+  [class.active]="isOpen"
+  (click)="toggleChat()"
+  aria-label="Open CityFix AI"
+>
+
+  <span class="launcher-ring"></span>
+
+  <span class="launcher-logo">
+
+    <svg
+      viewBox="0 0 48 48"
+      aria-hidden="true"
+    >
+
+      <path d="M8 38V21L17 15V38" />
+      <path d="M17 38V10L27 6V38" />
+      <path d="M27 38V18L38 13V38" />
+      <path d="M5 38H41" />
+
+      <path d="M13 25H13.1" />
+      <path d="M22 16H22.1" />
+      <path d="M22 23H22.1" />
+      <path d="M32 23H32.1" />
+
+    </svg>
+
+  </span>
+
+  <span class="launcher-status"></span>
+
+</button>
+
+
+<!-- =====================================================
+     CHAT WINDOW
+===================================================== -->
+
+<div
+  class="chat-wrapper"
+  *ngIf="isOpen"
+>
+
+  <div class="chat-window">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="chat-header">
+
+      <div class="assistant-profile">
+
+        <div class="assistant-logo">
+
+          <svg
+            viewBox="0 0 48 48"
+            aria-hidden="true"
+          >
+
+            <path d="M8 38V21L17 15V38" />
+            <path d="M17 38V10L27 6V38" />
+            <path d="M27 38V18L38 13V38" />
+            <path d="M5 38H41" />
+
+            <path d="M13 25H13.1" />
+            <path d="M22 16H22.1" />
+            <path d="M22 23H22.1" />
+            <path d="M32 23H32.1" />
+
+          </svg>
+
+        </div>
+
+
+        <div class="assistant-info">
+
+          <div class="assistant-name">
+            CityFix AI
+          </div>
+
+          <div class="assistant-status">
+
+            <span class="online-dot"></span>
+
+            Civic Assistant
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="header-controls">
+
+        <button
+          type="button"
+          class="clear-button"
+          (click)="clearChat()"
+          title="Clear chat"
+        >
+          ↻
+        </button>
+
+
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeChat()"
+          aria-label="Close chat"
+        >
+          ×
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CHAT BODY
+    ================================================== -->
+
+    <main class="chat-body">
+
+
+      <!-- =================================================
+           WELCOME
+      ================================================== -->
+
+      <div
+        class="welcome-area"
+        *ngIf="messages.length === 1"
+      >
+
+        <div class="welcome-logo">
+
+          <svg
+            viewBox="0 0 48 48"
+            aria-hidden="true"
+          >
+
+            <path d="M8 38V21L17 15V38" />
+            <path d="M17 38V10L27 6V38" />
+            <path d="M27 38V18L38 13V38" />
+            <path d="M5 38H41" />
+
+            <path d="M13 25H13.1" />
+            <path d="M22 16H22.1" />
+            <path d="M22 23H22.1" />
+            <path d="M32 23H32.1" />
+
+          </svg>
+
+        </div>
+
+
+        <span class="welcome-eyebrow">
+          CITYFIX INTELLIGENCE
+        </span>
+
+
+        <h2>
+          How can I help?
+        </h2>
+
+
+        <p>
+          Your civic assistant for reporting,
+          tracking and understanding city issues.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           MESSAGES
+      ================================================== -->
+
+      <div class="messages">
+
+        <div
+          class="message-row"
+          *ngFor="let message of messages"
+          [class.user-row]="message.sender === 'user'"
+          [class.bot-row]="message.sender === 'bot'"
+        >
+
+
+          <!-- =================================================
+               BOT AVATAR
+          ================================================= -->
+
+          <div
+            class="message-avatar"
+            *ngIf="message.sender === 'bot'"
+          >
+
+            <svg
+              viewBox="0 0 48 48"
+              aria-hidden="true"
+            >
+
+              <path d="M8 38V21L17 15V38" />
+              <path d="M17 38V10L27 6V38" />
+              <path d="M27 38V18L38 13V38" />
+              <path d="M5 38H41" />
+
+            </svg>
+
+          </div>
+
+
+          <!-- =================================================
+               MESSAGE CONTENT
+          ================================================== -->
+
+          <div class="message-content">
+
+
+            <!-- =================================================
+                 NORMAL MESSAGE
+            ================================================== -->
+
+            <div
+              class="message-bubble"
+              [class.bot-bubble]="message.sender === 'bot'"
+              [class.user-bubble]="message.sender === 'user'"
+              *ngIf="
+                !message.complaintData &&
+                !message.citizenComplaints
+              "
+            >
+
+              {{ message.text }}
+
+            </div>
+
+
+            <!-- =================================================
+                 CITIZEN COMPLAINTS LIST
+            ================================================== -->
+
+            <div
+              class="citizen-complaints-card"
+              *ngIf="
+                message.citizenComplaints as complaints
+              "
+            >
+
+              <!-- CARD HEADER -->
+
+              <div class="citizen-complaints-header">
+
+                <div>
+
+                  <span class="citizen-card-eyebrow">
+                    YOUR CITYFIX ACTIVITY
+                  </span>
+
+                  <h3>
+                    My Complaints
+                  </h3>
+
+                </div>
+
+
+                <div class="complaints-count">
+
+                  {{ complaints.length }}
+
+                </div>
+
+              </div>
+
+
+              <!-- INTRO -->
+
+              <div class="citizen-complaints-intro">
+
+                <span>
+                  ✦
+                </span>
+
+                Here are the complaints associated
+                with your CityFix account.
+
+              </div>
+
+
+              <!-- =================================================
+                   COMPLAINT ITEMS
+              ================================================== -->
+
+              <div class="citizen-complaint-list">
+
+                <button
+                  type="button"
+                  class="citizen-complaint-item"
+                  *ngFor="
+                    let complaint of complaints
+                  "
+                  (click)="trackComplaint(complaint._id)"
+                >
+
+                  <!-- TOP -->
+
+                  <div class="citizen-item-top">
+
+                    <div class="citizen-item-number">
+
+                      <span>
+                        #
+                      </span>
+
+                      {{ complaint._id.slice(-6) }}
+
+                    </div>
+
+
+                    <div
+                      class="citizen-status"
+                      [ngClass]="
+                        getStatusClass(
+                          complaint.status || 'Pending'
+                        )
+                      "
+                    >
+
+                      <span class="status-dot"></span>
+
+                      {{ complaint.status || 'Pending' }}
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- TITLE -->
+
+                  <div class="citizen-item-title">
+
+                    {{ complaint.title || 'Untitled Complaint' }}
+
+                  </div>
+
+
+                  <!-- DETAILS -->
+
+                  <div class="citizen-item-details">
+
+                    <div>
+
+                      <span>
+                        CATEGORY
+                      </span>
+
+                      <strong>
+                        {{ complaint.category || 'Other' }}
+                      </strong>
+
+                    </div>
+
+
+                    <div>
+
+                      <span>
+                        AI PRIORITY
+                      </span>
+
+                      <strong
+                        [ngClass]="
+                          getPriorityClass(
+                            complaint.priorityLevel ||
+                            calculatePriority(
+                              complaint.aiScore ??
+                              complaint.priorityScore ??
+                              0
+                            )
+                          )
+                        "
+                      >
+
+                        {{
+                          complaint.priorityLevel ||
+                          calculatePriority(
+                            complaint.aiScore ??
+                            complaint.priorityScore ??
+                            0
+                          )
+                        }}
+
+                      </strong>
+
+                    </div>
+
+
+                    <div>
+
+                      <span>
+                        AI SCORE
+                      </span>
+
+                      <strong>
+
+                        {{
+                          complaint.aiScore ??
+                          complaint.priorityScore ??
+                          0
+                        }}/100
+
+                      </strong>
+
+                    </div>
+
+
+                    <div>
+
+                      <span>
+                        REPORTED
+                      </span>
+
+                      <strong>
+
+                        {{
+                          formatDate(
+                            complaint.createdAt
+                          )
+                        }}
+
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- LOCATION -->
+
+                  <div
+                    class="citizen-item-location"
+                    *ngIf="
+                      complaint.location?.address
+                    "
+                  >
+
+                    <span>
+                      ⌖
+                    </span>
+
+                    <span>
+
+                      {{
+                        complaint.location?.address
+                      }}
+
+                    </span>
+
+                  </div>
+
+
+                  <!-- OPEN -->
+
+                  <div class="citizen-item-footer">
+
+                    <span>
+                      View AI analysis
+                    </span>
+
+                    <span class="item-arrow">
+                      →
+                    </span>
+
+                  </div>
+
+                </button>
+
+              </div>
+
+
+              <!-- FOOTER -->
+
+              <div class="citizen-complaints-footer">
+
+                <span>
+                  ✦
+                </span>
+
+                Select a complaint to view
+                its complete AI analysis.
+
+              </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 COMPLAINT RESULT CARD
+            ================================================== -->
+
+            <div
+              class="complaint-result-card"
+              *ngIf="message.complaintData as complaint"
+            >
+
+              <!-- CARD HEADER -->
+
+              <div class="complaint-card-header">
+
+                <div>
+
+                  <span class="complaint-card-eyebrow">
+                    CITYFIX INTELLIGENCE
+                  </span>
+
+                  <h3>
+                    Complaint Analysis
+                  </h3>
+
+                </div>
+
+
+                <div class="analysis-icon">
+                  ✦
+                </div>
+
+              </div>
+
+
+              <!-- STATUS + PRIORITY -->
+
+              <div class="complaint-status-row">
+
+                <div>
+
+                  <span class="field-label">
+                    CURRENT STATUS
+                  </span>
+
+                  <div
+                    class="status-pill"
+                    [ngClass]="
+                      getStatusClass(
+                        complaint.status
+                      )
+                    "
+                  >
+
+                    <span class="status-dot"></span>
+
+                    {{ complaint.status }}
+
+                  </div>
+
+                </div>
+
+
+                <div>
+
+                  <span class="field-label">
+                    AI PRIORITY
+                  </span>
+
+                  <div
+                    class="priority-pill"
+                    [ngClass]="
+                      getPriorityClass(
+                        complaint.priority
+                      )
+                    "
+                  >
+
+                    {{ complaint.priority }}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- AI SCORE -->
+
+              <div class="ai-score-section">
+
+                <div class="score-header">
+
+                  <div>
+
+                    <span class="field-label">
+                      AI URGENCY SCORE
+                    </span>
+
+                    <div class="score-number">
+
+                      {{ complaint.score }}
+
+                      <span>
+                        /100
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <div
+                    class="score-ring"
+                    [ngClass]="
+                      getScoreClass(
+                        complaint.score
+                      )
+                    "
+                  >
+
+                    <span>
+                      {{ complaint.score }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="score-track">
+
+                  <div
+                    class="score-fill"
+                    [ngClass]="
+                      getScoreClass(
+                        complaint.score
+                      )
+                    "
+                    [style.width.%]="
+                      complaint.score
+                    "
+                  ></div>
+
+                </div>
+
+              </div>
+
+
+              <!-- DETAILS -->
+
+              <div class="complaint-details-grid">
+
+                <div class="detail-item">
+
+                  <span class="field-label">
+                    CATEGORY
+                  </span>
+
+                  <strong>
+                    {{ complaint.category }}
+                  </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                  <span class="field-label">
+                    REPORTED
+                  </span>
+
+                  <strong>
+                    {{ complaint.date }}
+                  </strong>
+
+                </div>
+
+
+                <div class="detail-item full">
+
+                  <span class="field-label">
+                    LOCATION
+                  </span>
+
+                  <strong>
+                    {{ complaint.location }}
+                  </strong>
+
+                </div>
+
+
+                <div
+                  class="detail-item"
+                  *ngIf="complaint.resolution"
+                >
+
+                  <span class="field-label">
+                    EST. RESOLUTION
+                  </span>
+
+                  <strong>
+                    {{ complaint.resolution }} days
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <!-- AI REASONING -->
+
+              <div
+                class="analysis-section"
+                *ngIf="
+                  complaint.aiReasons.length > 0
+                "
+              >
+
+                <div class="section-title">
+
+                  <span class="section-icon">
+                    ✦
+                  </span>
+
+                  <div>
+
+                    <span>
+                      AI REASONING
+                    </span>
+
+                    <small>
+                      Why this priority was assigned
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <div class="reason-list">
+
+                  <div
+                    class="reason-item"
+                    *ngFor="
+                      let reason of complaint.aiReasons
+                    "
+                  >
+
+                    <span>
+                      ✓
+                    </span>
+
+                    {{ reason }}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- DETECTED FACTORS -->
+
+              <div
+                class="analysis-section"
+                *ngIf="
+                  complaint.detectedFactors.length > 0
+                "
+              >
+
+                <div class="section-title">
+
+                  <span class="section-icon">
+                    ◈
+                  </span>
+
+                  <div>
+
+                    <span>
+                      DETECTED FACTORS
+                    </span>
+
+                    <small>
+                      Signals identified by CityFix AI
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <div class="factor-list">
+
+                  <span
+                    class="factor-chip"
+                    *ngFor="
+                      let factor of complaint.detectedFactors
+                    "
+                  >
+
+                    {{ factor }}
+
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- RECOMMENDED ACTION -->
+
+              <div
+                class="recommendation"
+                *ngIf="
+                  complaint.recommendedAction
+                "
+              >
+
+                <div class="recommendation-icon">
+                  →
+                </div>
+
+
+                <div>
+
+                  <span>
+                    RECOMMENDED ACTION
+                  </span>
+
+                  <p>
+                    {{ complaint.recommendedAction }}
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <!-- FOOTER -->
+
+              <div class="complaint-card-footer">
+
+                <span>
+                  ✦
+                </span>
+
+                Analysis generated by CityFix AI
+
+              </div>
+
+            </div>
+
+
+            <!-- MESSAGE TIME -->
+
+            <span class="message-time">
+
+              {{ message.time }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           QUICK QUESTIONS
+      ================================================== -->
+
+      <div
+        class="quick-section"
+        *ngIf="!isTyping"
+      >
+
+        <div class="quick-heading">
+
+          <span>
+            ✦
+          </span>
+
+          Suggested questions
+
+        </div>
+
+
+        <div class="quick-buttons">
+
+          <button
+            type="button"
+            *ngFor="
+              let question of quickQuestions
+            "
+            (click)="
+              useQuickQuestion(question)
+            "
+          >
+
+            {{ question }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           QUICK ACTIONS
+      ================================================== -->
+
+      <div class="action-section">
+
+        <button
+          type="button"
+          class="action-card"
+          (click)="goToReportIssue()"
+        >
+
+          <span class="action-icon">
+            ＋
+          </span>
+
+          <span>
+            Report Issue
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="action-card"
+          (click)="goToTrackComplaint()"
+        >
+
+          <span class="action-icon">
+            ⌖
+          </span>
+
+          <span>
+            Track
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="action-card"
+          (click)="goToMyComplaints()"
+        >
+
+          <span class="action-icon">
+            ◫
+          </span>
+
+          <span>
+            My Complaints
+          </span>
+
+        </button>
+
+      </div>
+
+    </main>
+
+
+    <!-- =================================================
+         INPUT
+    ================================================== -->
+
+    <footer class="chat-input-area">
+
+      <div class="input-container">
+
+        <input
+          type="text"
+          [(ngModel)]="userMessage"
+          (keyup.enter)="sendMessage()"
+          placeholder="Ask CityFix..."
+          autocomplete="off"
+        />
+
+
+        <button
+          type="button"
+          class="send-button"
+          (click)="sendMessage()"
+          [disabled]="!userMessage.trim()"
+          aria-label="Send message"
+        >
+
+          <span>
+            ↑
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <div class="chat-footer-text">
+
+        <span>
+          ✦
+        </span>
+
+        CityFix AI · Civic support assistant
+
+      </div>
+
+    </footer>
+
+  </div>
+
+</div>

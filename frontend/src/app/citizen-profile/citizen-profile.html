@@ -1,0 +1,234 @@
+<div class="profile-page">
+
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+  <!-- NAVIGATION -->
+
+  <nav class="profile-nav">
+
+    <a
+      routerLink="/citizen-dashboard"
+      class="brand"
+    >
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div>
+        <div class="brand-name">
+          CityFix
+        </div>
+
+        <div class="brand-subtitle">
+          CITIZEN PORTAL
+        </div>
+      </div>
+
+    </a>
+
+
+    <a
+      routerLink="/citizen-dashboard"
+      class="back-btn"
+    >
+      ← Dashboard
+    </a>
+
+  </nav>
+
+
+  <!-- MAIN -->
+
+  <main class="profile-container">
+
+    <div class="page-intro">
+
+      <span class="badge">
+        👤 CITIZEN PROFILE
+      </span>
+
+      <h1>
+        Your
+        <span>Profile</span>
+      </h1>
+
+      <p>
+        View your registered CityFix account
+        information.
+      </p>
+
+    </div>
+
+
+    <!-- PROFILE CARD -->
+
+    <section class="profile-card">
+
+      <!-- PROFILE HEADER -->
+
+      <div class="profile-header">
+
+        <div class="avatar">
+          {{ citizenName.charAt(0).toUpperCase() }}
+        </div>
+
+        <div>
+
+          <span class="profile-label">
+            CITYFIX CITIZEN
+          </span>
+
+          <h2>
+            {{ citizenName }}
+          </h2>
+
+          <p>
+            {{ citizenCity }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="divider"></div>
+
+
+      <!-- INFORMATION -->
+
+      <div class="info-grid">
+
+        <div class="info-box">
+
+          <span class="info-label">
+            FULL NAME
+          </span>
+
+          <strong>
+            {{ citizenName }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            EMAIL ADDRESS
+          </span>
+
+          <strong>
+            {{ citizenEmail }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            PHONE NUMBER
+          </span>
+
+          <strong>
+            {{ citizenPhone }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            CITY
+          </span>
+
+          <strong>
+            {{ citizenCity }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box full-width">
+
+          <span class="info-label">
+            ADDRESS
+          </span>
+
+          <strong>
+            {{ citizenAddress }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- SECURITY -->
+
+      <div class="security-box">
+
+        <div class="security-icon">
+          🔐
+        </div>
+
+        <div>
+
+          <strong>
+            Your account is protected
+          </strong>
+
+          <p>
+            Your account information is securely
+            stored by CityFix.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+
+      <div class="profile-actions">
+
+        <a
+          routerLink="/citizen-dashboard"
+          class="secondary-btn"
+        >
+          ← Back to Dashboard
+        </a>
+
+        <button
+          type="button"
+          class="logout-btn"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="profile-footer">
+
+    <span>
+      © 2026 CityFix
+    </span>
+
+    <span>
+      AI-Powered Citizen Complaint Platform
+    </span>
+
+  </footer>
+
+</div>

@@ -1,0 +1,553 @@
+<div class="locations-page">
+
+  <!-- HEADER -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        LOCATION MANAGEMENT
+      </span>
+
+      <h1>
+        Complaint Locations
+      </h1>
+
+      <p>
+        Understand where citizen complaints are being reported.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="refreshLocations()"
+      [disabled]="isLoading"
+    >
+
+      ↻
+
+      {{
+        isLoading
+          ? 'Loading...'
+          : 'Refresh'
+      }}
+
+    </button>
+
+  </header>
+
+
+  <!-- ERROR -->
+
+  <div
+    class="error-box"
+    *ngIf="errorMessage"
+  >
+
+    ⚠️
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    class="loading-state"
+    *ngIf="isLoading"
+  >
+
+    <div class="loading-icon">
+      📍
+    </div>
+
+    <h3>
+      Loading locations...
+    </h3>
+
+    <p>
+      Fetching complaint location data.
+    </p>
+
+  </div>
+
+
+  <!-- CONTENT -->
+
+  <div
+    *ngIf="!isLoading"
+  >
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-grid">
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon blue">
+          📍
+        </div>
+
+        <div>
+
+          <span>
+            Total Locations
+          </span>
+
+          <strong>
+            {{ totalLocations }}
+          </strong>
+
+          <small>
+            Unique complaint locations
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon purple">
+          📋
+        </div>
+
+        <div>
+
+          <span>
+            Total Complaints
+          </span>
+
+          <strong>
+            {{ totalComplaints }}
+          </strong>
+
+          <small>
+            Complaints with location data
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon red">
+          🚨
+        </div>
+
+        <div>
+
+          <span>
+            Critical Locations
+          </span>
+
+          <strong>
+            {{ criticalLocations }}
+          </strong>
+
+          <small>
+            Locations with critical cases
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon orange">
+          🔥
+        </div>
+
+        <div>
+
+          <span>
+            Most Affected
+          </span>
+
+          <strong class="location-value">
+            {{ mostAffectedLocation }}
+          </strong>
+
+          <small>
+            Highest complaint count
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOCATIONS -->
+
+    <section class="locations-card">
+
+      <div class="section-header">
+
+        <div>
+
+          <span class="section-label">
+            LOCATION OVERVIEW
+          </span>
+
+          <h2>
+            Complaint Hotspots
+          </h2>
+
+          <p>
+            Locations ranked by number of reported complaints.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="location-list">
+
+        <div
+          class="location-row"
+          *ngFor="
+            let location of locations;
+            let i = index;
+            trackBy: trackByLocation
+          "
+        >
+
+          <!-- RANK -->
+
+          <div class="rank">
+            {{ i + 1 }}
+          </div>
+
+
+          <!-- LOCATION -->
+
+          <div class="location-info">
+
+            <div class="location-title">
+
+              <span class="pin">
+                📍
+              </span>
+
+              <strong>
+                {{ location.address }}
+              </strong>
+
+            </div>
+
+            <span class="coordinates">
+
+              {{
+                location.latitude ??
+                'N/A'
+              }}
+
+              ,
+
+              {{
+                location.longitude ??
+                'N/A'
+              }}
+
+            </span>
+
+          </div>
+
+
+          <!-- COMPLAINT COUNT -->
+
+          <div class="complaint-count">
+
+            <strong>
+              {{ location.complaintCount }}
+            </strong>
+
+            <span>
+              complaints
+            </span>
+
+          </div>
+
+
+          <!-- CRITICAL -->
+
+          <div class="mini-stat critical-stat">
+
+            <span>
+              Critical
+            </span>
+
+            <strong>
+              {{ location.criticalCount }}
+            </strong>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="status-summary">
+
+            <span class="pending">
+              {{ location.pendingCount }}
+              pending
+            </span>
+
+            <span class="resolved">
+              {{ location.resolvedCount }}
+              resolved
+            </span>
+
+          </div>
+
+
+          <!-- VIEW -->
+
+          <button
+            type="button"
+            class="view-button"
+            (click)="viewLocation(location)"
+          >
+
+            View
+
+            <span>
+              →
+            </span>
+
+          </button>
+
+        </div>
+
+
+        <!-- EMPTY -->
+
+        <div
+          class="empty-state"
+          *ngIf="locations.length === 0"
+        >
+
+          <div>
+            📍
+          </div>
+
+          <h3>
+            No location data found
+          </h3>
+
+          <p>
+            Complaints with location information will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     LOCATION MODAL
+====================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedLocation"
+  (click)="closeLocation()"
+>
+
+  <div
+    class="location-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+
+    <!-- HEADER -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <span>
+          LOCATION DETAILS
+        </span>
+
+        <h2>
+          📍
+          {{ selectedLocation.address }}
+        </h2>
+
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeLocation()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <div class="modal-body">
+
+
+      <!-- LOCATION DATA -->
+
+      <div class="detail-grid">
+
+        <div>
+
+          <span>
+            Latitude
+          </span>
+
+          <strong>
+            {{
+              selectedLocation.latitude ??
+              'N/A'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Longitude
+          </span>
+
+          <strong>
+            {{
+              selectedLocation.longitude ??
+              'N/A'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Complaints
+          </span>
+
+          <strong>
+            {{ selectedLocation.complaintCount }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Critical
+          </span>
+
+          <strong class="critical">
+            {{ selectedLocation.criticalCount }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- COMPLAINTS -->
+
+      <div class="modal-section">
+
+        <h3>
+          Complaints at this location
+        </h3>
+
+        <div class="modal-complaints">
+
+          <div
+            class="modal-complaint"
+            *ngFor="
+              let complaint
+              of selectedLocation.complaints
+            "
+          >
+
+            <div>
+
+              <strong>
+                {{
+                  complaint.title ||
+                  'Untitled Complaint'
+                }}
+              </strong>
+
+              <span>
+                {{
+                  complaint.category ||
+                  'Other'
+                }}
+              </span>
+
+            </div>
+
+            <span
+              class="priority-badge"
+              [ngClass]="
+                getPriorityClass(complaint)
+              "
+            >
+
+              {{
+                getPriorityLevel(complaint)
+              }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        (click)="closeLocation()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

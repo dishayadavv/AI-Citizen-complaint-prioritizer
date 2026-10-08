@@ -1,0 +1,1498 @@
+@import 'leaflet/dist/leaflet.css';
+/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   CITYFIX GLOBAL THEME
+   DARK • NEON PURPLE • GLASSMORPHISM
+========================================================= */
+
+:root {
+  --cf-bg: #03020a;
+  --cf-bg-2: #070312;
+  --cf-surface: #0b0715;
+  --cf-surface-2: #10091c;
+
+  --cf-purple: #a83cff;
+  --cf-purple-light: #d56cff;
+  --cf-purple-dark: #6f20c9;
+
+  --cf-violet: #7c3cff;
+  --cf-blue: #635bff;
+  --cf-pink: #e04dff;
+
+  --cf-text: #f8f2ff;
+  --cf-text-soft: #c6b9d3;
+  --cf-muted: #81758e;
+
+  --cf-border: rgba(180, 65, 255, 0.28);
+  --cf-border-bright: rgba(205, 75, 255, 0.65);
+
+  --cf-glow:
+    0 0 18px rgba(168, 60, 255, 0.25);
+
+  --cf-glow-strong:
+    0 0 20px rgba(180, 55, 255, 0.45),
+    0 0 50px rgba(120, 30, 255, 0.18);
+
+  --cf-gradient:
+    linear-gradient(
+      135deg,
+      #7622dc,
+      #b735ff,
+      #d44cff
+    );
+
+  --cf-gradient-soft:
+    linear-gradient(
+      135deg,
+      rgba(126, 34, 220, 0.18),
+      rgba(196, 48, 255, 0.08)
+    );
+}
+
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+
+html {
+  scroll-behavior: smooth;
+
+  background:
+    var(--cf-bg);
+}
+
+
+body {
+  margin: 0;
+
+  min-height: 100vh;
+
+  color: var(--cf-text);
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(123, 35, 220, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(91, 55, 255, 0.10),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(200, 45, 255, 0.06),
+      transparent 32%
+    ),
+    var(--cf-bg);
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   GLOBAL SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #030208;
+}
+
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #6e25c9,
+      #b43cff
+    );
+
+  box-shadow:
+    0 0 10px rgba(180, 60, 255, 0.5);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    #cf55ff;
+}
+
+
+/* =========================================================
+   COMMON PAGE BACKGROUND
+========================================================= */
+
+.login-page,
+.register-page,
+.dashboard-page,
+.report-page,
+.track-page,
+.profile-page,
+.complaints-page,
+.admin-page,
+.admin-login-page,
+.analytics-page,
+.citizens-page,
+.locations-page,
+.map-page,
+.settings-page {
+  min-height: 100vh;
+
+  color: var(--cf-text);
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(140, 35, 255, 0.12),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(89, 53, 255, 0.09),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(207, 45, 255, 0.06),
+      transparent 35%
+    ),
+    #03020a;
+}
+
+
+/* =========================================================
+   COMMON NAVIGATION
+========================================================= */
+
+.login-nav,
+.register-nav,
+.dashboard-nav,
+.citizen-nav,
+.admin-nav,
+.page-nav {
+  position: relative;
+
+  z-index: 50;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 72px;
+
+  padding:
+    12px 4%;
+
+  background:
+    rgba(4, 3, 12, 0.86);
+
+  border-bottom:
+    1px solid rgba(174, 57, 255, 0.18);
+
+  backdrop-filter:
+    blur(22px);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   CITYFIX BRAND
+========================================================= */
+
+.brand,
+.logo,
+.nav-logo {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #ffffff !important;
+
+  text-decoration: none !important;
+
+  font-weight: 900;
+}
+
+
+.brand-icon,
+.logo-icon {
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  background:
+    var(--cf-gradient);
+
+  border:
+    1px solid rgba(222, 139, 255, 0.45);
+
+  box-shadow:
+    var(--cf-glow-strong);
+
+  font-size: 20px;
+}
+
+
+.brand-name,
+.logo-name {
+  color: #ffffff;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+.brand-name::first-letter,
+.logo-name::first-letter {
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   COMMON NAV LINKS
+========================================================= */
+
+.nav-links,
+.nav-menu,
+.navigation {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.nav-links a,
+.nav-menu a,
+.navigation a {
+  color: #a99bb8 !important;
+
+  text-decoration: none !important;
+
+  padding:
+    9px 12px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  transition:
+    0.25s ease;
+}
+
+
+.nav-links a:hover,
+.nav-menu a:hover,
+.navigation a:hover {
+  color: #ffffff !important;
+
+  background:
+    rgba(161, 42, 255, 0.09);
+
+  text-shadow:
+    0 0 12px rgba(196, 75, 255, 0.55);
+}
+
+
+.nav-links a.active,
+.nav-menu a.active,
+.navigation a.active {
+  color: #ffffff !important;
+
+  background:
+    rgba(165, 43, 255, 0.09);
+
+  box-shadow:
+    inset 0 -2px 0 #c34dff;
+}
+
+
+/* =========================================================
+   ALL COMMON BUTTONS
+========================================================= */
+
+button,
+.primary-btn,
+.secondary-btn,
+.submit-btn,
+.login-btn,
+.register-btn,
+.action-btn,
+.cta-btn {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+
+button:not(:disabled):hover,
+.primary-btn:hover,
+.secondary-btn:hover,
+.submit-btn:hover,
+.login-btn:hover,
+.register-btn:hover,
+.action-btn:hover,
+.cta-btn:hover {
+  transform:
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   PRIMARY PURPLE BUTTON
+========================================================= */
+
+.primary-btn,
+.submit-btn,
+.register-btn,
+.register-button,
+.create-account-btn,
+.save-btn,
+.login-submit,
+.action-primary {
+  color: #ffffff !important;
+
+  border:
+    1px solid rgba(225, 142, 255, 0.48) !important;
+
+  background:
+    var(--cf-gradient) !important;
+
+  box-shadow:
+    0 0 18px rgba(164, 42, 255, 0.28),
+    0 10px 30px rgba(88, 20, 140, 0.18);
+
+  text-decoration: none !important;
+}
+
+
+.primary-btn:hover,
+.submit-btn:hover,
+.register-btn:hover,
+.register-button:hover,
+.create-account-btn:hover,
+.save-btn:hover,
+.login-submit:hover,
+.action-primary:hover {
+  border-color:
+    rgba(238, 171, 255, 0.85) !important;
+
+  box-shadow:
+    0 0 22px rgba(193, 53, 255, 0.50),
+    0 0 50px rgba(121, 35, 255, 0.20) !important;
+}
+
+
+/* =========================================================
+   SECONDARY / GLASS BUTTON
+========================================================= */
+
+.secondary-btn,
+.action-btn,
+.cancel-btn,
+.back-btn,
+.logout-btn,
+.outline-btn {
+  color: #eee3f8 !important;
+
+  border:
+    1px solid rgba(185, 62, 255, 0.35) !important;
+
+  background:
+    rgba(112, 30, 160, 0.07) !important;
+
+  text-decoration: none !important;
+
+  box-shadow:
+    inset 0 0 20px rgba(161, 40, 255, 0.03);
+}
+
+
+.secondary-btn:hover,
+.action-btn:hover,
+.cancel-btn:hover,
+.back-btn:hover,
+.logout-btn:hover,
+.outline-btn:hover {
+  color: #ffffff !important;
+
+  border-color:
+    rgba(211, 82, 255, 0.75) !important;
+
+  background:
+    rgba(142, 38, 190, 0.14) !important;
+
+  box-shadow:
+    0 0 20px rgba(176, 45, 255, 0.20) !important;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card,
+.login-card,
+.register-card,
+.dashboard-card,
+.stat-card,
+.complaint-card,
+.feature-card,
+.profile-card,
+.form-card,
+.content-card,
+.panel,
+.table-card,
+.analytics-card,
+.admin-card,
+.location-card,
+.settings-card,
+.track-card {
+  color: var(--cf-text);
+
+  border:
+    1px solid var(--cf-border) !important;
+
+  border-radius:
+    16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(31, 9, 48, 0.72),
+      rgba(7, 5, 16, 0.82)
+    ) !important;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.30),
+    inset 0 0 25px rgba(155, 35, 255, 0.025);
+
+  backdrop-filter:
+    blur(18px);
+}
+
+
+.card:hover,
+.dashboard-card:hover,
+.stat-card:hover,
+.complaint-card:hover,
+.feature-card:hover,
+.location-card:hover {
+  border-color:
+    rgba(201, 70, 255, 0.52) !important;
+
+  box-shadow:
+    0 0 25px rgba(166, 42, 255, 0.10),
+    0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   HEADINGS
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff;
+}
+
+
+h1 span,
+h2 span,
+.gradient-text,
+.highlight {
+  background:
+    linear-gradient(
+      90deg,
+      #9e58ff,
+      #d14cff,
+      #ef75ff
+    );
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(
+      0 0 14px
+      rgba(195, 65, 255, 0.25)
+    );
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+label {
+  color: #d7c8e4;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  color: #f8f1ff !important;
+
+  background:
+    rgba(8, 5, 17, 0.85) !important;
+
+  border:
+    1px solid rgba(166, 59, 225, 0.28) !important;
+
+  border-radius:
+    10px;
+
+  outline: none;
+
+  box-shadow:
+    inset 0 0 15px rgba(138, 35, 220, 0.025);
+
+  transition:
+    0.25s ease;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  color:
+    #6f647b !important;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color:
+    #bd4cff !important;
+
+  background:
+    rgba(17, 7, 28, 0.95) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(177, 55, 255, 0.08),
+    0 0 20px rgba(177, 55, 255, 0.16) !important;
+}
+
+
+/* =========================================================
+   SELECT DROPDOWN
+========================================================= */
+
+select option {
+  color: #ffffff;
+
+  background:
+    #0b0613;
+}
+
+
+/* =========================================================
+   FORM ICONS
+========================================================= */
+
+.input-icon,
+.feature-icon,
+.card-icon,
+.form-icon {
+  color: #ce5cff !important;
+
+  text-shadow:
+    0 0 12px rgba(206, 92, 255, 0.65);
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge,
+.status-badge,
+.category-badge,
+.ai-badge,
+.priority-badge {
+  color: #d477ff !important;
+
+  border:
+    1px solid rgba(190, 65, 255, 0.38) !important;
+
+  background:
+    rgba(151, 35, 220, 0.08) !important;
+
+  box-shadow:
+    0 0 12px rgba(174, 45, 255, 0.08);
+}
+
+
+/* =========================================================
+   STAT NUMBERS
+========================================================= */
+
+.stat-number,
+.stat-value,
+.count,
+.metric-value {
+  color: #d45cff !important;
+
+  text-shadow:
+    0 0 14px rgba(212, 92, 255, 0.45);
+}
+
+
+/* =========================================================
+   STATUS COLORS
+========================================================= */
+
+/* Pending */
+
+.pending,
+.status-pending,
+.priority-low {
+  color: #d39aff !important;
+
+  background:
+    rgba(155, 69, 255, 0.09) !important;
+
+  border-color:
+    rgba(175, 75, 255, 0.30) !important;
+}
+
+
+/* In Progress */
+
+.in-progress,
+.status-progress,
+.priority-medium {
+  color: #9fa0ff !important;
+
+  background:
+    rgba(99, 91, 255, 0.09) !important;
+
+  border-color:
+    rgba(109, 104, 255, 0.30) !important;
+}
+
+
+/* Resolved */
+
+.resolved,
+.status-resolved {
+  color: #79ffc6 !important;
+
+  background:
+    rgba(43, 220, 150, 0.07) !important;
+
+  border-color:
+    rgba(60, 255, 175, 0.22) !important;
+}
+
+
+/* High */
+
+.high,
+.priority-high {
+  color: #ef77ff !important;
+
+  background:
+    rgba(212, 65, 255, 0.09) !important;
+
+  border-color:
+    rgba(220, 75, 255, 0.30) !important;
+}
+
+
+/* Critical */
+
+.critical,
+.priority-critical {
+  color: #ff7bdc !important;
+
+  background:
+    rgba(255, 45, 180, 0.09) !important;
+
+  border-color:
+    rgba(255, 65, 190, 0.35) !important;
+
+  box-shadow:
+    0 0 14px rgba(255, 45, 180, 0.10);
+}
+
+
+/* =========================================================
+   TABLES — ADMIN
+========================================================= */
+
+table {
+  width: 100%;
+
+  color: #eee4f5;
+
+  border-collapse: collapse;
+
+  background:
+    rgba(7, 4, 15, 0.55);
+}
+
+
+thead {
+  background:
+    rgba(130, 35, 190, 0.10);
+}
+
+
+th {
+  color: #d5bce4;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.6px;
+
+  text-transform: uppercase;
+
+  border-bottom:
+    1px solid rgba(178, 57, 255, 0.18);
+}
+
+
+td {
+  color: #a99caf;
+
+  border-bottom:
+    1px solid rgba(150, 45, 220, 0.10);
+}
+
+
+tr:hover td {
+  color: #eee5f5;
+
+  background:
+    rgba(155, 42, 230, 0.055);
+}
+
+
+/* =========================================================
+   ADMIN SIDEBAR
+========================================================= */
+
+.sidebar,
+.admin-sidebar,
+.side-nav {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 6, 24, 0.97),
+      rgba(4, 3, 11, 0.98)
+    ) !important;
+
+  border-right:
+    1px solid rgba(176, 55, 255, 0.18) !important;
+
+  box-shadow:
+    15px 0 50px rgba(0, 0, 0, 0.25);
+}
+
+
+.sidebar a,
+.admin-sidebar a,
+.side-nav a {
+  color: #877b93 !important;
+
+  border-radius:
+    10px;
+
+  transition:
+    0.25s ease;
+}
+
+
+.sidebar a:hover,
+.admin-sidebar a:hover,
+.side-nav a:hover {
+  color: #ffffff !important;
+
+  background:
+    rgba(157, 42, 230, 0.10);
+
+  box-shadow:
+    inset 3px 0 0 #b846ff,
+    0 0 15px rgba(164, 42, 255, 0.07);
+}
+
+
+.sidebar a.active,
+.admin-sidebar a.active,
+.side-nav a.active {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(157, 42, 230, 0.18),
+      rgba(157, 42, 230, 0.04)
+    ) !important;
+
+  box-shadow:
+    inset 3px 0 0 #c64cff,
+    0 0 18px rgba(165, 40, 255, 0.08);
+}
+
+
+/* =========================================================
+   ADMIN TOP BAR
+========================================================= */
+
+.admin-header,
+.dashboard-header,
+.topbar {
+  background:
+    rgba(4, 3, 11, 0.82) !important;
+
+  border-bottom:
+    1px solid rgba(177, 56, 255, 0.15) !important;
+
+  backdrop-filter:
+    blur(20px);
+}
+
+
+/* =========================================================
+   AI ANALYSIS
+========================================================= */
+
+.ai-score,
+.ai-number,
+.ai-value {
+  color: #d85cff !important;
+
+  text-shadow:
+    0 0 18px rgba(216, 92, 255, 0.55);
+}
+
+
+.ai-card,
+.ai-analysis-card,
+.ai-panel {
+  border:
+    1px solid rgba(190, 61, 255, 0.38) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(47, 10, 68, 0.68),
+      rgba(9, 4, 18, 0.86)
+    ) !important;
+
+  box-shadow:
+    0 0 30px rgba(164, 39, 255, 0.10),
+    inset 0 0 30px rgba(174, 40, 255, 0.035);
+}
+
+
+.ai-icon,
+.ai-symbol {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7926e8,
+      #cf3cff
+    ) !important;
+
+  box-shadow:
+    0 0 20px rgba(186, 52, 255, 0.40);
+}
+
+
+/* =========================================================
+   PROGRESS BARS
+========================================================= */
+
+.progress,
+.progress-bar-container,
+.ai-progress {
+  overflow: hidden;
+
+  background:
+    rgba(158, 52, 220, 0.08) !important;
+
+  border:
+    1px solid rgba(166, 54, 225, 0.14);
+
+  border-radius:
+    20px;
+}
+
+
+.progress-bar,
+.ai-progress-bar,
+.progress-fill {
+  background:
+    linear-gradient(
+      90deg,
+      #762cff,
+      #c73cff,
+      #ed67ff
+    ) !important;
+
+  box-shadow:
+    0 0 12px rgba(197, 57, 255, 0.65);
+}
+
+
+/* =========================================================
+   TRACK COMPLAINT
+========================================================= */
+
+.track-nav-link,
+.track-button,
+.track-complaint-btn {
+  color: #f4e8ff !important;
+
+  border:
+    1px solid rgba(194, 63, 255, 0.52) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(116, 30, 190, 0.17),
+      rgba(50, 25, 120, 0.10)
+    ) !important;
+
+  box-shadow:
+    0 0 15px rgba(166, 40, 255, 0.12);
+
+  text-decoration: none !important;
+}
+
+
+.track-nav-link:hover,
+.track-button:hover,
+.track-complaint-btn:hover {
+  color: #ffffff !important;
+
+  border-color:
+    #d45cff !important;
+
+  background:
+    rgba(157, 38, 215, 0.18) !important;
+
+  box-shadow:
+    0 0 22px rgba(191, 51, 255, 0.35),
+    0 0 45px rgba(126, 34, 255, 0.15);
+}
+
+
+/* =========================================================
+   TRACKING TIMELINE
+========================================================= */
+
+.timeline,
+.status-timeline,
+.tracking-timeline {
+  position: relative;
+}
+
+
+.timeline::before,
+.status-timeline::before,
+.tracking-timeline::before {
+  background:
+    linear-gradient(
+      to bottom,
+      #c044ff,
+      #7435e8,
+      rgba(116, 53, 232, 0.15)
+    ) !important;
+
+  box-shadow:
+    0 0 10px rgba(190, 60, 255, 0.30);
+}
+
+
+.timeline-dot,
+.status-dot,
+.step-dot {
+  background:
+    #a83cff !important;
+
+  border:
+    2px solid #d56cff !important;
+
+  box-shadow:
+    0 0 12px #a83cff,
+    0 0 25px rgba(168, 60, 255, 0.55);
+}
+
+
+.timeline-step.active,
+.status-step.active,
+.step.active {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal,
+.modal-overlay,
+.dialog-overlay {
+  background:
+    rgba(0, 0, 0, 0.76) !important;
+
+  backdrop-filter:
+    blur(8px);
+}
+
+
+.modal-content,
+.dialog,
+.modal-card {
+  color: #f8f1ff !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #160922,
+      #08040f
+    ) !important;
+
+  border:
+    1px solid rgba(193, 63, 255, 0.45) !important;
+
+  border-radius:
+    18px;
+
+  box-shadow:
+    0 0 40px rgba(156, 38, 255, 0.20),
+    0 30px 80px rgba(0, 0, 0, 0.60);
+}
+
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+.error-box,
+.error-message {
+  color: #ffb1e7 !important;
+
+  border:
+    1px solid rgba(255, 70, 190, 0.30) !important;
+
+  background:
+    rgba(210, 40, 150, 0.07) !important;
+}
+
+
+.success-box,
+.success-message {
+  color: #aaffd8 !important;
+
+  border:
+    1px solid rgba(60, 255, 175, 0.25) !important;
+
+  background:
+    rgba(30, 190, 110, 0.06) !important;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.empty-state {
+  color: #8d8197;
+
+  border:
+    1px dashed rgba(178, 55, 255, 0.30);
+
+  background:
+    rgba(130, 35, 190, 0.035);
+}
+
+
+.empty-state .icon,
+.empty-state-icon {
+  color: #c454ff;
+
+  text-shadow:
+    0 0 18px rgba(196, 84, 255, 0.55);
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box,
+.search-wrapper {
+  border:
+    1px solid rgba(173, 54, 230, 0.25);
+
+  background:
+    rgba(8, 5, 17, 0.70);
+
+  border-radius:
+    11px;
+
+  box-shadow:
+    inset 0 0 20px rgba(145, 35, 210, 0.025);
+}
+
+
+.search-box:focus-within,
+.search-wrapper:focus-within {
+  border-color:
+    rgba(201, 70, 255, 0.60);
+
+  box-shadow:
+    0 0 18px rgba(174, 43, 255, 0.12);
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map-container,
+.map-wrapper,
+.leaflet-container {
+  background:
+    #080513 !important;
+
+  border:
+    1px solid rgba(178, 55, 255, 0.30) !important;
+
+  box-shadow:
+    0 0 30px rgba(150, 40, 255, 0.10);
+}
+
+
+.map-container {
+  border-radius:
+    16px;
+
+  overflow:
+    hidden;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-avatar,
+.avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #7928df,
+      #d343ff
+    ) !important;
+
+  color:
+    #ffffff !important;
+
+  border:
+    1px solid rgba(222, 138, 255, 0.50);
+
+  box-shadow:
+    0 0 25px rgba(175, 43, 255, 0.32);
+}
+
+
+/* =========================================================
+   TOGGLE / SWITCH
+========================================================= */
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  accent-color:
+    #bd4cff;
+}
+
+
+/* =========================================================
+   LOADING SPINNER
+========================================================= */
+
+.spinner,
+.loader {
+  border:
+    3px solid rgba(186, 65, 255, 0.15) !important;
+
+  border-top-color:
+    #d052ff !important;
+
+  box-shadow:
+    0 0 12px rgba(208, 82, 255, 0.30);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer,
+.login-footer,
+.register-footer {
+  color: #665a71;
+
+  background:
+    #020208;
+
+  border-top:
+    1px solid rgba(171, 53, 235, 0.13);
+}
+
+
+footer a {
+  color: #8d7b9d !important;
+
+  text-decoration: none;
+}
+
+
+footer a:hover {
+  color: #d25cff !important;
+
+  text-shadow:
+    0 0 10px rgba(210, 92, 255, 0.40);
+}
+
+
+/* =========================================================
+   GLOW EFFECTS
+========================================================= */
+
+.bg-glow,
+.glow,
+.background-glow {
+  background:
+    rgba(153, 40, 255, 0.10) !important;
+
+  filter:
+    blur(100px);
+}
+
+
+.glow-purple {
+  box-shadow:
+    0 0 25px rgba(180, 50, 255, 0.30),
+    0 0 60px rgba(120, 30, 255, 0.14);
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD — PURPLE METRIC CARDS
+========================================================= */
+
+.admin-stat,
+.dashboard-stat,
+.metric-card {
+  border:
+    1px solid rgba(174, 55, 255, 0.27) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(37, 10, 56, 0.68),
+      rgba(7, 5, 15, 0.82)
+    ) !important;
+}
+
+
+.admin-stat:hover,
+.dashboard-stat:hover,
+.metric-card:hover {
+  border-color:
+    rgba(207, 76, 255, 0.60) !important;
+
+  box-shadow:
+    0 0 28px rgba(170, 43, 255, 0.13);
+}
+
+
+/* =========================================================
+   ADMIN ACTION BUTTONS
+========================================================= */
+
+.admin-action,
+.dashboard-action,
+.quick-action {
+  color: #d9c9e8 !important;
+
+  background:
+    rgba(111, 29, 160, 0.06) !important;
+
+  border:
+    1px solid rgba(176, 53, 240, 0.22) !important;
+}
+
+
+.admin-action:hover,
+.dashboard-action:hover,
+.quick-action:hover {
+  color: #ffffff !important;
+
+  background:
+    rgba(153, 40, 220, 0.13) !important;
+
+  border-color:
+    rgba(203, 70, 255, 0.55) !important;
+
+  box-shadow:
+    0 0 20px rgba(171, 43, 255, 0.14);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .login-nav,
+  .register-nav,
+  .dashboard-nav,
+  .citizen-nav,
+  .admin-nav,
+  .page-nav {
+    padding:
+      12px 18px;
+  }
+
+
+  .nav-links,
+  .nav-menu,
+  .navigation {
+    overflow-x:
+      auto;
+
+    max-width:
+      100%;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .brand-name,
+  .logo-name {
+    font-size:
+      16px;
+  }
+
+
+  .brand-icon,
+  .logo-icon {
+    width:
+      34px;
+
+    height:
+      34px;
+  }
+
+
+  .nav-links a,
+  .nav-menu a,
+  .navigation a {
+    font-size:
+      10px;
+
+    padding:
+      8px;
+    }
+
+
+  .card,
+  .login-card,
+  .register-card,
+  .dashboard-card,
+  .stat-card,
+  .complaint-card,
+  .feature-card {
+    border-radius:
+      14px;
+  }
+}

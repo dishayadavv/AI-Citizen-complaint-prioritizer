@@ -1,0 +1,627 @@
+<div class="citizens-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        MANAGEMENT
+      </span>
+
+      <h1>
+        Citizens
+      </h1>
+
+      <p>
+        View citizens and monitor their complaint activity.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="refreshCitizens()"
+      [disabled]="isLoading"
+    >
+
+      ↻ Refresh
+
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    class="error-box"
+    *ngIf="errorMessage"
+  >
+
+    ⚠️ {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    class="loading-box"
+    *ngIf="isLoading"
+  >
+
+    <div class="loading-icon">
+      👥
+    </div>
+
+    <h3>
+      Loading citizens...
+    </h3>
+
+    <p>
+      Fetching citizen information.
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       CONTENT
+  ====================================================== -->
+
+  <div
+    class="content"
+    *ngIf="!isLoading"
+  >
+
+
+    <!-- ===================================================
+         SUMMARY
+    ==================================================== -->
+
+    <section class="summary-grid">
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon blue">
+          👥
+        </div>
+
+        <div>
+
+          <span>
+            Total Citizens
+          </span>
+
+          <strong>
+            {{ totalCitizens }}
+          </strong>
+
+          <small>
+            Citizens in system
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon green">
+          ✓
+        </div>
+
+        <div>
+
+          <span>
+            Active Citizens
+          </span>
+
+          <strong>
+            {{ activeCitizens }}
+          </strong>
+
+          <small>
+            With active complaints
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon purple">
+          📋
+        </div>
+
+        <div>
+
+          <span>
+            Total Complaints
+          </span>
+
+          <strong>
+            {{ totalComplaints }}
+          </strong>
+
+          <small>
+            Submitted by citizens
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon orange">
+          ⭐
+        </div>
+
+        <div>
+
+          <span>
+            Most Active
+          </span>
+
+          <strong
+            *ngIf="mostActiveCitizen"
+          >
+            {{ mostActiveCitizen.name }}
+          </strong>
+
+          <strong
+            *ngIf="!mostActiveCitizen"
+          >
+            N/A
+          </strong>
+
+          <small
+            *ngIf="mostActiveCitizen"
+          >
+            {{ mostActiveCitizen.complaintCount }}
+            complaints
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CITIZEN LIST
+    ==================================================== -->
+
+    <section class="citizens-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <span class="section-label">
+            CITIZEN MANAGEMENT
+          </span>
+
+          <h2>
+            All Citizens
+          </h2>
+
+          <p>
+            Review citizen information and complaint activity.
+          </p>
+
+        </div>
+
+        <span class="record-count">
+          {{ filteredCitizens.length }} citizens
+        </span>
+
+      </div>
+
+
+      <!-- SEARCH -->
+
+      <div class="search-section">
+
+        <div class="search-box">
+
+          <span>
+            🔍
+          </span>
+
+          <input
+            type="text"
+            [(ngModel)]="searchText"
+            placeholder="Search citizens by name or email..."
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- TABLE -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                CITIZEN
+              </th>
+
+              <th>
+                EMAIL
+              </th>
+
+              <th>
+                COMPLAINTS
+              </th>
+
+              <th>
+                LATEST COMPLAINT
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+              <th>
+                ACTION
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="
+                let citizen of filteredCitizens;
+                trackBy: trackByCitizen
+              "
+            >
+
+              <!-- CITIZEN -->
+
+              <td>
+
+                <div class="citizen-cell">
+
+                  <div class="avatar">
+
+                    {{ getInitial(citizen.name) }}
+
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ citizen.name }}
+                    </strong>
+
+                    <small>
+                      Citizen ID:
+                      {{ citizen.id | slice:0:12 }}
+                    </small>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- EMAIL -->
+
+              <td>
+
+                <span class="email">
+                  {{ citizen.email }}
+                </span>
+
+              </td>
+
+
+              <!-- COMPLAINT COUNT -->
+
+              <td>
+
+                <span class="complaint-count">
+                  {{ citizen.complaintCount }}
+                </span>
+
+              </td>
+
+
+              <!-- LATEST -->
+
+              <td>
+
+                <div class="latest-cell">
+
+                  <strong>
+                    {{ citizen.latestComplaint }}
+                  </strong>
+
+                  <small>
+                    {{ formatDate(citizen.latestDate) }}
+                  </small>
+
+                </div>
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [ngClass]="
+                    citizen.status.toLowerCase()
+                  "
+                >
+
+                  {{ citizen.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ACTION -->
+
+              <td>
+
+                <button
+                  type="button"
+                  class="view-btn"
+                  (click)="viewCitizen(citizen)"
+                >
+
+                  View →
+
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- NO DATA -->
+
+            <tr
+              *ngIf="
+                filteredCitizens.length === 0
+              "
+            >
+
+              <td
+                colspan="6"
+                class="no-data"
+              >
+
+                <div>
+                  👥
+                </div>
+
+                <strong>
+                  No citizens found
+                </strong>
+
+                <p>
+                  Citizen information will appear here
+                  when complaints are submitted.
+                </p>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     CITIZEN DETAILS MODAL
+====================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedCitizen"
+  (click)="closeCitizen()"
+>
+
+  <div
+    class="modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- HEADER -->
+
+    <div class="modal-header">
+
+      <div class="citizen-heading">
+
+        <div class="large-avatar">
+
+          {{
+            getInitial(
+              selectedCitizen.name
+            )
+          }}
+
+        </div>
+
+        <div>
+
+          <span>
+            CITIZEN PROFILE
+          </span>
+
+          <h2>
+            {{ selectedCitizen.name }}
+          </h2>
+
+          <p>
+            {{ selectedCitizen.email }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeCitizen()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <div class="modal-body">
+
+
+      <div class="detail-grid">
+
+
+        <div class="detail-card">
+
+          <span>
+            Total Complaints
+          </span>
+
+          <strong>
+            {{ selectedCitizen.complaintCount }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail-card">
+
+          <span>
+            Account Status
+          </span>
+
+          <strong>
+            {{ selectedCitizen.status }}
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="modal-section">
+
+        <h3>
+          Complaint History
+        </h3>
+
+
+        <div
+          class="complaint-item"
+          *ngFor="
+            let complaint of selectedCitizen.complaints
+          "
+        >
+
+          <div>
+
+            <strong>
+              {{
+                complaint.title ||
+                'Untitled Complaint'
+              }}
+            </strong>
+
+            <small>
+
+              {{
+                complaint.category ||
+                'Other'
+              }}
+
+              ·
+
+              {{
+                complaint.status ||
+                'Pending'
+              }}
+
+            </small>
+
+          </div>
+
+
+          <span>
+            {{ formatDate(complaint.createdAt) }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        (click)="closeCitizen()"
+      >
+
+        Close
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,393 @@
+<div class="settings-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        ADMINISTRATION
+      </span>
+
+      <h1>
+        Settings
+      </h1>
+
+      <p>
+        Manage CityFix administrator and complaint system settings.
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       SETTINGS CONTENT
+  ====================================================== -->
+
+  <div class="settings-container">
+
+
+    <!-- ===================================================
+         GENERAL
+    ==================================================== -->
+
+    <section class="settings-card">
+
+      <div class="card-header">
+
+        <div class="card-icon blue">
+          ⚙️
+        </div>
+
+        <div>
+
+          <span class="section-label">
+            GENERAL
+          </span>
+
+          <h2>
+            General Settings
+          </h2>
+
+          <p>
+            Configure basic CityFix behaviour.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="setting-row">
+
+        <div class="setting-info">
+
+          <strong>
+            Email Notifications
+          </strong>
+
+          <span>
+            Receive notifications when new complaints are submitted.
+          </span>
+
+        </div>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            [(ngModel)]="emailNotifications"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <!-- RESOLVED -->
+
+      <div class="setting-row">
+
+        <div class="setting-info">
+
+          <strong>
+            Show Resolved Complaints
+          </strong>
+
+          <span>
+            Include resolved complaints in administrative views.
+          </span>
+
+        </div>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            [(ngModel)]="showResolvedComplaints"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         AI
+    ==================================================== -->
+
+    <section class="settings-card">
+
+      <div class="card-header">
+
+        <div class="card-icon purple">
+          ✦
+        </div>
+
+        <div>
+
+          <span class="section-label">
+            ARTIFICIAL INTELLIGENCE
+          </span>
+
+          <h2>
+            AI Settings
+          </h2>
+
+          <p>
+            Configure CityFix complaint intelligence features.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- AI ANALYSIS -->
+
+      <div class="setting-row">
+
+        <div class="setting-info">
+
+          <strong>
+            AI Complaint Analysis
+          </strong>
+
+          <span>
+            Analyze complaint urgency and generate AI insights.
+          </span>
+
+        </div>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            [(ngModel)]="aiAnalysis"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <!-- PRIORITY -->
+
+      <div class="setting-row">
+
+        <div class="setting-info">
+
+          <strong>
+            Automatic Priority Calculation
+          </strong>
+
+          <span>
+            Automatically calculate complaint priority using severity and other factors.
+          </span>
+
+        </div>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            [(ngModel)]="automaticPriority"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <!-- SIMILAR -->
+
+      <div class="setting-row">
+
+        <div class="setting-info">
+
+          <strong>
+            Similar Complaint Detection
+          </strong>
+
+          <span>
+            Detect similar complaints reported in the system.
+          </span>
+
+        </div>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            [(ngModel)]="similarComplaintDetection"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SYSTEM INFORMATION
+    ==================================================== -->
+
+    <section class="settings-card">
+
+      <div class="card-header">
+
+        <div class="card-icon green">
+          ℹ️
+        </div>
+
+        <div>
+
+          <span class="section-label">
+            SYSTEM
+          </span>
+
+          <h2>
+            System Information
+          </h2>
+
+          <p>
+            Information about the current CityFix application.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="system-grid">
+
+        <div class="system-item">
+
+          <span>
+            Application
+          </span>
+
+          <strong>
+            CityFix
+          </strong>
+
+        </div>
+
+
+        <div class="system-item">
+
+          <span>
+            Version
+          </span>
+
+          <strong>
+            1.0.0
+          </strong>
+
+        </div>
+
+
+        <div class="system-item">
+
+          <span>
+            Frontend
+          </span>
+
+          <strong>
+            Angular
+          </strong>
+
+        </div>
+
+
+        <div class="system-item">
+
+          <span>
+            Backend
+          </span>
+
+          <strong>
+            Node.js / Express
+          </strong>
+
+        </div>
+
+
+        <div class="system-item">
+
+          <span>
+            Database
+          </span>
+
+          <strong>
+            MongoDB
+          </strong>
+
+        </div>
+
+
+        <div class="system-item">
+
+          <span>
+            AI Engine
+          </span>
+
+          <strong>
+            CityFix AI
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ACTIONS
+    ==================================================== -->
+
+    <div class="settings-actions">
+
+      <button
+        type="button"
+        class="reset-button"
+        (click)="resetSettings()"
+      >
+        Reset
+      </button>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="saveSettings()"
+      >
+        ✓ Save Settings
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>

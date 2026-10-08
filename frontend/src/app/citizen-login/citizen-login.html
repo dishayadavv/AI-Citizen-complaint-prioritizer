@@ -1,0 +1,423 @@
+<div class="login-page">
+
+  <!-- =====================================================
+       BACKGROUND GLOWS
+  ====================================================== -->
+
+  <div class="bg-glow glow-one"></div>
+  <div class="bg-glow glow-two"></div>
+
+
+  <!-- =====================================================
+       NAVIGATION
+  ====================================================== -->
+
+  <header class="login-nav">
+
+    <a
+      routerLink="/"
+      class="brand"
+    >
+
+      <span class="brand-icon">
+        ✦
+      </span>
+
+      <span class="brand-name">
+        CityFix
+      </span>
+
+    </a>
+
+
+    <div class="nav-register">
+
+      <span>
+        New to CityFix?
+      </span>
+
+      <a
+        routerLink="/citizen-register"
+        class="register-btn-small"
+      >
+        Create Account
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
+  <main class="login-content">
+
+
+    <!-- ===================================================
+         LEFT SIDE
+    ==================================================== -->
+
+    <section class="login-intro">
+
+      <span class="badge">
+        ✦ AI-Powered Civic Platform
+      </span>
+
+
+      <h1>
+        Welcome
+        <span>Back, Citizen.</span>
+      </h1>
+
+
+      <p class="intro-text">
+
+        Login to your CityFix account to report
+        civic issues, track complaints and help
+        make your community better.
+
+      </p>
+
+
+      <!-- FEATURE 1 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          🏙️
+        </div>
+
+        <div>
+
+          <h3>
+            Your City. Your Voice.
+          </h3>
+
+          <p>
+            Report problems in your neighbourhood
+            and make your voice heard.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEATURE 2 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          🤖
+        </div>
+
+        <div>
+
+          <h3>
+            AI-Powered Prioritization
+          </h3>
+
+          <p>
+            CityFix intelligently prioritizes
+            important civic complaints.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEATURE 3 -->
+
+      <div class="intro-feature">
+
+        <div class="feature-icon">
+          📍
+        </div>
+
+        <div>
+
+          <h3>
+            Track Your Complaints
+          </h3>
+
+          <p>
+            Stay updated on the progress of
+            every issue you report.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           CITY VISUAL
+      ================================================== -->
+
+      <div class="city-visual">
+
+        <div class="city-glow"></div>
+
+        <div class="city-building building-one"></div>
+
+        <div class="city-building building-two"></div>
+
+        <div class="city-building building-three"></div>
+
+        <div class="city-building building-four"></div>
+
+        <div class="city-building building-five"></div>
+
+        <div class="city-ground"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         LOGIN CARD
+    ==================================================== -->
+
+    <section class="login-card">
+
+
+      <!-- =================================================
+           CARD HEADER
+      ================================================== -->
+
+      <div class="card-header">
+
+        <div class="card-icon">
+          👤
+        </div>
+
+        <div>
+
+          <h2>
+            Sign In
+          </h2>
+
+          <p>
+            Access your CityFix account.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           SUCCESS MESSAGE
+      ================================================== -->
+
+      <div
+        class="success-box"
+        *ngIf="successMessage"
+        role="status"
+        aria-live="polite"
+      >
+
+        <span class="message-icon">
+          ✓
+        </span>
+
+        <div>
+
+          <strong>
+            Login Successful
+          </strong>
+
+          <p>
+            {{ successMessage }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           ERROR MESSAGE
+      ================================================== -->
+
+      <div
+        class="error-box"
+        *ngIf="errorMessage"
+        role="alert"
+        aria-live="assertive"
+      >
+
+        <span class="message-icon">
+          ⚠
+        </span>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           EMAIL
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email Address
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            ✉
+          </span>
+
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="loginData.email"
+            name="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            maxlength="120"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           PASSWORD
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            🔒
+          </span>
+
+          <input
+            id="password"
+            type="password"
+            [(ngModel)]="loginData.password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            maxlength="128"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           LOGIN BUTTON
+      ================================================== -->
+
+      <button
+        type="button"
+        class="login-btn"
+        (click)="login()"
+        [disabled]="isLoading"
+      >
+
+        <span *ngIf="!isLoading">
+
+          Login to CityFix
+
+          <span class="button-arrow">
+            →
+          </span>
+
+        </span>
+
+
+        <span
+          *ngIf="isLoading"
+          class="loading-content"
+        >
+
+          <span class="spinner"></span>
+
+          Logging In...
+
+        </span>
+
+      </button>
+
+
+      <!-- =================================================
+           SECURITY NOTE
+      ================================================== -->
+
+      <div class="security-note">
+
+        <span>
+          🔒
+        </span>
+
+        <span>
+          Your login information is securely processed.
+        </span>
+
+      </div>
+
+
+      <!-- =================================================
+           REGISTER
+      ================================================== -->
+
+      <div class="register-note">
+
+        Don't have a CityFix account?
+
+        <a
+          routerLink="/citizen-register"
+        >
+          Create Account
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="login-footer">
+
+    <span>
+      ©️ 2026 CityFix
+    </span>
+
+    <span>
+      •
+    </span>
+
+    <span>
+      Building better communities
+    </span>
+
+  </footer>
+
+</div>

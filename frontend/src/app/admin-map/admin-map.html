@@ -1,0 +1,680 @@
+<div class="map-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        LOCATION MANAGEMENT
+      </span>
+
+      <h1>
+        Complaint Map
+      </h1>
+
+      <p>
+        View citizen complaints by location and identify
+        areas with high-priority issues.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="refreshMap()"
+      [disabled]="isLoading"
+    >
+      ↻ Refresh
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    class="error-box"
+    *ngIf="errorMessage"
+  >
+
+    ⚠️
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =====================================================
+       SUMMARY
+  ====================================================== -->
+
+  <section class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon blue">
+        📋
+      </div>
+
+      <div>
+
+        <span>
+          Total Complaints
+        </span>
+
+        <strong>
+          {{ totalComplaints }}
+        </strong>
+
+        <small>
+          Complaints on map
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon red">
+        🚨
+      </div>
+
+      <div>
+
+        <span>
+          Critical
+        </span>
+
+        <strong>
+          {{ criticalComplaints }}
+        </strong>
+
+        <small>
+          Require urgent attention
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon orange">
+        ⏳
+      </div>
+
+      <div>
+
+        <span>
+          Pending
+        </span>
+
+        <strong>
+          {{ pendingComplaints }}
+        </strong>
+
+        <small>
+          Awaiting action
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon green">
+        ✓
+      </div>
+
+      <div>
+
+        <span>
+          Resolved
+        </span>
+
+        <strong>
+          {{ resolvedComplaints }}
+        </strong>
+
+        <small>
+          Successfully completed
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FILTERS
+  ====================================================== -->
+
+  <section class="filter-card">
+
+    <div class="filter-header">
+
+      <div>
+
+        <span class="section-label">
+          MAP FILTERS
+        </span>
+
+        <h2>
+          Find Complaints
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="clear-btn"
+        (click)="clearFilters()"
+      >
+        Clear filters
+      </button>
+
+    </div>
+
+
+    <div class="filters">
+
+      <div class="search-box">
+
+        <span>
+          🔍
+        </span>
+
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Search complaint, category or location..."
+        />
+
+      </div>
+
+
+      <select
+        [(ngModel)]="selectedPriority"
+        (ngModelChange)="onPriorityChange()"
+      >
+
+        <option value="All">
+          All Priorities
+        </option>
+
+        <option value="Critical">
+          Critical
+        </option>
+
+        <option value="High">
+          High
+        </option>
+
+        <option value="Medium">
+          Medium
+        </option>
+
+        <option value="Low">
+          Low
+        </option>
+
+      </select>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MAP
+  ====================================================== -->
+
+  <section class="map-card">
+
+    <div class="map-header">
+
+      <div>
+
+        <span class="section-label">
+          LOCATION OVERVIEW
+        </span>
+
+        <h2>
+          Complaint Locations
+        </h2>
+
+        <p>
+          Click a marker to view complaint information.
+        </p>
+
+      </div>
+
+
+      <div class="legend">
+
+        <span>
+          <i class="critical"></i>
+          Critical
+        </span>
+
+        <span>
+          <i class="high"></i>
+          High
+        </span>
+
+        <span>
+          <i class="medium"></i>
+          Medium
+        </span>
+
+        <span>
+          <i class="low"></i>
+          Low
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="map-container">
+
+      <div
+        id="adminMap"
+        class="leaflet-map"
+      ></div>
+
+
+      <div
+        class="map-loading"
+        *ngIf="isLoading"
+      >
+
+        <div class="loading-spinner"></div>
+
+        <span>
+          Loading complaint locations...
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       COMPLAINT LIST
+  ====================================================== -->
+
+  <section class="complaint-list-card">
+
+    <div class="list-header">
+
+      <div>
+
+        <span class="section-label">
+          COMPLAINT RECORDS
+        </span>
+
+        <h2>
+          Mapped Complaints
+        </h2>
+
+      </div>
+
+      <span class="record-count">
+        {{ filteredComplaints.length }} records
+      </span>
+
+    </div>
+
+
+    <div
+      class="complaint-row"
+      *ngFor="
+        let complaint of filteredComplaints
+      "
+    >
+
+      <div class="complaint-icon">
+        {{ (complaint.title || 'C').charAt(0).toUpperCase() }}
+      </div>
+
+
+      <div class="complaint-info">
+
+        <strong>
+          {{
+            complaint.title ||
+            'Untitled Complaint'
+          }}
+        </strong>
+
+        <span>
+
+          {{
+            complaint.category ||
+            'Other'
+          }}
+
+          ·
+
+          {{
+            complaint.location?.address ||
+            'Location unavailable'
+          }}
+
+        </span>
+
+      </div>
+
+
+      <span
+        class="priority-badge"
+        [ngClass]="
+          getPriorityClass(complaint)
+        "
+      >
+
+        {{
+          getPriorityLevel(
+            complaint
+          )
+        }}
+
+      </span>
+
+
+      <span
+        class="status-badge"
+        [ngClass]="
+          getStatusClass(
+            complaint.status
+          )
+        "
+      >
+
+        {{
+          complaint.status ||
+          'Pending'
+        }}
+
+      </span>
+
+
+      <span class="date">
+
+        {{
+          formatDate(
+            complaint.createdAt
+          )
+        }}
+
+      </span>
+
+
+      <button
+        type="button"
+        class="view-btn"
+        (click)="viewComplaint(complaint)"
+      >
+        View →
+      </button>
+
+    </div>
+
+
+    <div
+      class="no-data"
+      *ngIf="
+        !isLoading &&
+        filteredComplaints.length === 0
+      "
+    >
+
+      No complaints found.
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     COMPLAINT MODAL
+====================================================== -->
+
+<div
+  class="modal-overlay"
+  *ngIf="selectedComplaint"
+  (click)="closeComplaint()"
+>
+
+  <div
+    class="modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <div class="modal-header">
+
+      <div>
+
+        <span>
+          COMPLAINT DETAILS
+        </span>
+
+        <h2>
+          {{
+            selectedComplaint.title ||
+            'Untitled Complaint'
+          }}
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeComplaint()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="modal-grid">
+
+        <div>
+
+          <span>
+            Category
+          </span>
+
+          <strong>
+            {{
+              selectedComplaint.category ||
+              'Other'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Priority
+          </span>
+
+          <strong
+            [ngClass]="
+              getPriorityClass(
+                selectedComplaint
+              )
+            "
+          >
+            {{
+              getPriorityLevel(
+                selectedComplaint
+              )
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Severity
+          </span>
+
+          <strong>
+            {{
+              selectedComplaint.severity ??
+              0
+            }}/5
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            AI Score
+          </span>
+
+          <strong>
+            {{
+              selectedComplaint.aiScore ??
+              0
+            }}/100
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Status
+          </span>
+
+          <strong>
+            {{
+              selectedComplaint.status ||
+              'Pending'
+            }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Similar Cases
+          </span>
+
+          <strong>
+            {{
+              selectedComplaint.similarComplaints ??
+              0
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-section">
+
+        <h3>
+          Description
+        </h3>
+
+        <p>
+          {{
+            selectedComplaint.description ||
+            'No description provided.'
+          }}
+        </p>
+
+      </div>
+
+
+      <div class="modal-section">
+
+        <h3>
+          Location
+        </h3>
+
+        <p>
+          📍
+          {{
+            selectedComplaint.location?.address ||
+            'Location unavailable'
+          }}
+        </p>
+
+      </div>
+
+
+      <div class="modal-section">
+
+        <h3>
+          Submitted
+        </h3>
+
+        <p>
+          {{
+            formatDate(
+              selectedComplaint.createdAt
+            )
+          }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        (click)="closeComplaint()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

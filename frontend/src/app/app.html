@@ -1,0 +1,1152 @@
+@if (isHomePage) {
+
+<div class="page">
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+
+  <nav class="navbar">
+
+    <a routerLink="/" class="brand">
+
+      <div class="brand-icon">
+        <span>✦</span>
+      </div>
+
+      <div class="brand-text">
+        <span class="brand-city">CITY</span>
+        <span class="brand-fix">FIX</span>
+      </div>
+
+    </a>
+
+
+    <div class="nav-links">
+
+      <a routerLink="/" class="nav-link active">
+        Home
+      </a>
+
+      <a href="#how-it-works" class="nav-link">
+        How It Works
+      </a>
+
+      <a href="#features" class="nav-link">
+        Features
+      </a>
+
+      <a href="#impact" class="nav-link">
+        Impact
+      </a>
+
+
+      <!-- REPORT ISSUE -->
+
+      <a
+        [routerLink]="getReportRoute()"
+        class="nav-link"
+      >
+        Report Issue
+      </a>
+
+
+      <!-- =================================================
+           TRACK COMPLAINT
+      ================================================== -->
+
+      <a
+        routerLink="/track-complaint"
+        class="track-nav-link"
+      >
+
+        <span class="track-nav-icon">
+          ⌖
+        </span>
+
+        <span>
+          Track Complaint
+        </span>
+
+      </a>
+
+
+      <!-- LOGIN -->
+
+      <a
+        routerLink="/citizen-login"
+        class="login-btn"
+      >
+        Login
+      </a>
+
+
+      <!-- REGISTER -->
+
+      <a
+        routerLink="/citizen-register"
+        class="register-btn"
+      >
+        Register
+      </a>
+
+
+      <!-- ADMIN -->
+
+      <a
+        routerLink="/admin-login"
+        class="admin-btn"
+      >
+
+        <span>
+          ◈
+        </span>
+
+        Admin
+
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero">
+
+    <div class="hero-background-grid"></div>
+
+    <div class="hero-glow hero-glow-one"></div>
+
+    <div class="hero-glow hero-glow-two"></div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+
+        <span class="badge-dot"></span>
+
+        AI-POWERED CIVIC MANAGEMENT
+
+      </div>
+
+
+      <h1>
+
+        Building
+
+        <span>
+          Smarter Cities
+        </span>
+
+        Together.
+
+      </h1>
+
+
+      <p class="hero-description">
+
+        CityFix connects citizens and city authorities
+        through intelligent complaint management,
+        AI-powered prioritization and real-time
+        issue tracking.
+
+      </p>
+
+
+      <!-- HERO BUTTONS -->
+
+      <div class="hero-actions">
+
+        <a
+          [routerLink]="getReportRoute()"
+          class="primary-btn"
+        >
+
+          <span>
+            Report an Issue
+          </span>
+
+          <span class="arrow">
+            →
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/track-complaint"
+          class="secondary-btn track-hero-btn"
+        >
+
+          <span class="track-icon">
+            ⌖
+          </span>
+
+          <span>
+            Track Complaint
+          </span>
+
+        </a>
+
+      </div>
+
+
+      <!-- TRUST -->
+
+      <div class="hero-trust">
+
+        <div class="trust-item">
+
+          <span class="trust-icon">
+            ✓
+          </span>
+
+          AI Prioritization
+
+        </div>
+
+
+        <div class="trust-item">
+
+          <span class="trust-icon">
+            ✓
+          </span>
+
+          Real-Time Tracking
+
+        </div>
+
+
+        <div class="trust-item">
+
+          <span class="trust-icon">
+            ✓
+          </span>
+
+          Citizen Focused
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         CITY MAP
+    ==================================================== -->
+
+    <div class="hero-visual">
+
+      <div class="map-card">
+
+        <div class="map-header">
+
+          <div>
+
+            <span class="map-eyebrow">
+              LIVE CITY OVERVIEW
+            </span>
+
+            <h3>
+              Civic Intelligence Map
+            </h3>
+
+          </div>
+
+
+          <div class="map-status">
+
+            <span></span>
+
+            LIVE
+
+          </div>
+
+        </div>
+
+
+        <div class="city-map">
+
+          <div class="map-grid"></div>
+
+
+          <div class="map-road road-one"></div>
+
+          <div class="map-road road-two"></div>
+
+          <div class="map-road road-three"></div>
+
+          <div class="map-road road-four"></div>
+
+
+          <div
+            class="map-building map-building-one"
+          ></div>
+
+          <div
+            class="map-building map-building-two"
+          ></div>
+
+          <div
+            class="map-building map-building-three"
+          ></div>
+
+          <div
+            class="map-building map-building-four"
+          ></div>
+
+          <div
+            class="map-building map-building-five"
+          ></div>
+
+          <div
+            class="map-building map-building-six"
+          ></div>
+
+
+          <div class="map-pin pin-blue">
+
+            <span>
+              ♟
+            </span>
+
+          </div>
+
+
+          <div class="map-pin pin-purple">
+
+            <span>
+              ♻
+            </span>
+
+          </div>
+
+
+          <div class="map-pin pin-orange">
+
+            <span>
+              !
+            </span>
+
+          </div>
+
+
+          <div class="map-center">
+
+            <div class="center-ring"></div>
+
+            <div class="center-dot"></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- AI CARD -->
+
+        <div class="ai-floating-card">
+
+          <div class="ai-icon">
+            ✦
+          </div>
+
+          <div>
+
+            <span>
+              AI Analysis
+            </span>
+
+            <strong>
+              Enabled ✓
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRIORITY CARD -->
+
+        <div class="priority-floating-card">
+
+          <div class="priority-number">
+            92
+          </div>
+
+          <div>
+
+            <span>
+              AI Priority
+            </span>
+
+            <strong>
+              High Priority
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       STATS
+  ====================================================== -->
+
+  <section class="stats-section">
+
+    <div class="stat-item">
+
+      <strong>
+        AI
+      </strong>
+
+      <span>
+        Powered Analysis
+      </span>
+
+    </div>
+
+
+    <div class="stat-divider"></div>
+
+
+    <div class="stat-item">
+
+      <strong>
+        24/7
+      </strong>
+
+      <span>
+        Complaint Tracking
+      </span>
+
+    </div>
+
+
+    <div class="stat-divider"></div>
+
+
+    <div class="stat-item">
+
+      <strong>
+        100%
+      </strong>
+
+      <span>
+        Citizen Focused
+      </span>
+
+    </div>
+
+
+    <div class="stat-divider"></div>
+
+
+    <div class="stat-item">
+
+      <strong>
+        Real-Time
+      </strong>
+
+      <span>
+        Status Updates
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HOW IT WORKS
+  ====================================================== -->
+
+  <section
+    class="how-section"
+    id="how-it-works"
+  >
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        HOW IT WORKS
+      </span>
+
+      <h2>
+
+        From Problem to
+
+        <span>
+          Solution.
+        </span>
+
+      </h2>
+
+      <p>
+
+        CityFix makes reporting and resolving civic
+        problems simple, transparent and intelligent.
+
+      </p>
+
+    </div>
+
+
+    <div class="steps-container">
+
+      <div class="step-card">
+
+        <div class="step-number">
+          01
+        </div>
+
+        <div class="step-icon">
+          📢
+        </div>
+
+        <h3>
+          Report
+        </h3>
+
+        <p>
+
+          Submit a civic complaint with details,
+          location and issue category.
+
+        </p>
+
+      </div>
+
+
+      <div class="step-line"></div>
+
+
+      <div class="step-card">
+
+        <div class="step-number">
+          02
+        </div>
+
+        <div class="step-icon">
+          🤖
+        </div>
+
+        <h3>
+          AI Analyzes
+        </h3>
+
+        <p>
+
+          Our AI analyzes severity and intelligently
+          determines complaint priority.
+
+        </p>
+
+      </div>
+
+
+      <div class="step-line"></div>
+
+
+      <div class="step-card">
+
+        <div class="step-number">
+          03
+        </div>
+
+        <div class="step-icon">
+          ⚡
+        </div>
+
+        <h3>
+          Prioritize
+        </h3>
+
+        <p>
+
+          Important issues receive higher priority
+          so authorities can act faster.
+
+        </p>
+
+      </div>
+
+
+      <div class="step-line"></div>
+
+
+      <div class="step-card">
+
+        <div class="step-number">
+          04
+        </div>
+
+        <div class="step-icon">
+          📍
+        </div>
+
+        <h3>
+          Track
+        </h3>
+
+        <p>
+
+          Citizens can track their complaint status
+          from submission to resolution.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FEATURES
+  ====================================================== -->
+
+  <section
+    class="features-section"
+    id="features"
+  >
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        CITYFIX FEATURES
+      </span>
+
+      <h2>
+
+        Technology That
+
+        <span>
+          Serves People.
+        </span>
+
+      </h2>
+
+      <p>
+
+        Powerful tools designed to connect citizens,
+        data and civic authorities.
+
+      </p>
+
+    </div>
+
+
+    <div class="features-grid">
+
+      <div class="feature-card large-feature">
+
+        <div class="feature-top">
+
+          <div class="feature-icon-box">
+            ✦
+          </div>
+
+          <span class="feature-tag">
+            AI
+          </span>
+
+        </div>
+
+
+        <h3>
+          Intelligent Complaint Prioritization
+        </h3>
+
+
+        <p>
+
+          AI evaluates complaints using severity,
+          category and similar issues to calculate
+          an intelligent priority score.
+
+        </p>
+
+
+        <div class="feature-visual ai-bars">
+
+          <div>
+            <span style="width: 88%"></span>
+          </div>
+
+          <div>
+            <span style="width: 72%"></span>
+          </div>
+
+          <div>
+            <span style="width: 94%"></span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon-box">
+          📍
+        </div>
+
+
+        <h3>
+          Real-Time Tracking
+        </h3>
+
+
+        <p>
+
+          Follow your complaint from Pending
+          to In Progress and finally Resolved.
+
+        </p>
+
+
+        <a
+          routerLink="/track-complaint"
+          class="feature-link"
+        >
+          Track a Complaint →
+        </a>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon-box">
+          📊
+        </div>
+
+
+        <h3>
+          Civic Analytics
+        </h3>
+
+
+        <p>
+
+          Understand complaint patterns and
+          identify areas that need attention.
+
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon-box">
+          🗺️
+        </div>
+
+
+        <h3>
+          Location Intelligence
+        </h3>
+
+
+        <p>
+
+          Map-based civic insights help identify
+          complaint hotspots across the city.
+
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-icon-box">
+          🔔
+        </div>
+
+
+        <h3>
+          Transparent Updates
+        </h3>
+
+
+        <p>
+
+          Citizens stay informed about the progress
+          of every complaint they submit.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       IMPACT
+  ====================================================== -->
+
+  <section
+    class="impact-section"
+    id="impact"
+  >
+
+    <div class="impact-content">
+
+      <span class="section-label">
+        OUR IMPACT
+      </span>
+
+
+      <h2>
+
+        Building a City That
+
+        <span>
+          Listens.
+        </span>
+
+      </h2>
+
+
+      <p>
+
+        CityFix creates a direct connection between
+        citizens and civic management, making every
+        complaint visible, measurable and actionable.
+
+      </p>
+
+
+      <div class="impact-points">
+
+        <div class="impact-point">
+
+          <span class="impact-check">
+            ✓
+          </span>
+
+          <div>
+
+            <strong>
+              Faster Prioritization
+            </strong>
+
+            <p>
+
+              Important complaints are identified
+              using AI-powered analysis.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="impact-point">
+
+          <span class="impact-check">
+            ✓
+          </span>
+
+          <div>
+
+            <strong>
+              Complete Transparency
+            </strong>
+
+            <p>
+
+              Citizens can see how their complaints
+              are progressing.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="impact-point">
+
+          <span class="impact-check">
+            ✓
+          </span>
+
+          <div>
+
+            <strong>
+              Data-Driven Decisions
+            </strong>
+
+            <p>
+
+              Authorities can use complaint trends
+              to improve civic services.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="impact-visual">
+
+      <div class="impact-circle">
+
+        <div class="impact-inner">
+
+          <span>
+            ✦
+          </span>
+
+          <strong>
+            CITYFIX
+          </strong>
+
+          <small>
+            SMART CIVIC PLATFORM
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="orbit orbit-one"></div>
+
+      <div class="orbit orbit-two"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CTA
+  ====================================================== -->
+
+  <section class="cta-section">
+
+    <div class="cta-glow"></div>
+
+
+    <div class="cta-content">
+
+      <span class="section-label">
+        MAKE A DIFFERENCE
+      </span>
+
+
+      <h2>
+
+        Your City.
+
+        <span>
+          Your Voice.
+        </span>
+
+      </h2>
+
+
+      <p>
+
+        Report a problem today and help make
+        your community a better place.
+
+      </p>
+
+
+      <div class="cta-actions">
+
+        <a
+          [routerLink]="getReportRoute()"
+          class="cta-button"
+        >
+
+          Report an Issue
+
+          <span>
+            →
+          </span>
+
+        </a>
+
+
+        <a
+          routerLink="/track-complaint"
+          class="cta-track-button"
+        >
+
+          <span>
+            ⌖
+          </span>
+
+          Track Complaint
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="footer">
+
+    <div class="footer-brand">
+
+      <a
+        routerLink="/"
+        class="brand"
+      >
+
+        <div class="brand-icon">
+          <span>✦</span>
+        </div>
+
+        <div class="brand-text">
+
+          <span class="brand-city">
+            CITY
+          </span>
+
+          <span class="brand-fix">
+            FIX
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <p>
+
+        Intelligent civic management
+        for better communities.
+
+      </p>
+
+    </div>
+
+
+    <div class="footer-column">
+
+      <h4>
+        Platform
+      </h4>
+
+      <a [routerLink]="getReportRoute()">
+        Report Issue
+      </a>
+
+      <a routerLink="/track-complaint">
+        Track Complaint
+      </a>
+
+      <a routerLink="/citizen-login">
+        Login
+      </a>
+
+      <a routerLink="/citizen-register">
+        Register
+      </a>
+
+    </div>
+
+
+    <div class="footer-column">
+
+      <h4>
+        Explore
+      </h4>
+
+      <a href="#how-it-works">
+        How It Works
+      </a>
+
+      <a href="#features">
+        Features
+      </a>
+
+      <a href="#impact">
+        Impact
+      </a>
+
+    </div>
+
+
+    <div class="footer-column">
+
+      <h4>
+        Administration
+      </h4>
+
+      <a routerLink="/admin-login">
+        Admin Portal
+      </a>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <span>
+        ©️ 2026 CityFix
+      </span>
+
+      <span>
+        Building better communities.
+      </span>
+
+    </div>
+
+  </footer>
+
+</div>
+
+}
+
+@else {
+
+  <router-outlet></router-outlet>
+
+}
+
+
+<!-- =====================================================
+     CITYFIX AI CHATBOT
+====================================================== -->
+
+<app-cityfix-chatbot></app-cityfix-chatbot>
