@@ -124,7 +124,7 @@ export class AdminDashboardComponent
   // ===================================================
 
   private apiUrl =
-    'http://localhost:5000/api/complaints';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
 
 
   // ===================================================

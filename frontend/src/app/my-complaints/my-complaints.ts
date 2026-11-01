@@ -58,7 +58,7 @@ export class MyComplaints {
     }
 
     const url =
-      `http://localhost:5000/api/complaints/citizen/${encodeURIComponent(citizenEmail)}`;
+      `http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints/citizen/${encodeURIComponent(citizenEmail)}`;
 
     console.log(
       'Fetching complaints from:',

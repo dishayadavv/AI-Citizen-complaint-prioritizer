@@ -49,7 +49,7 @@ export class CitizenLogin {
   ====================================================== */
 
   private apiUrl =
-    'http://localhost:5000/api/citizens/login';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/citizens/login';
 
 
   /* =====================================================

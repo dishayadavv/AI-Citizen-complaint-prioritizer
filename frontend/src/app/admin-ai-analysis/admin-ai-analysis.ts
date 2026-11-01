@@ -11,11 +11,6 @@ import {
   HttpClient
 } from '@angular/common/http';
 
-
-// =====================================================
-// COMPLAINT INTERFACE
-// =====================================================
-
 interface Complaint {
 
   _id?: string;
@@ -125,7 +120,7 @@ export class AdminAiAnalysis {
   // ===================================================
 
   private apiUrl =
-    'http://localhost:5000/api/complaints';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
 
 
   // ===================================================
@@ -1051,7 +1046,7 @@ export class AdminAiAnalysis {
 
 
     return (
-      'http://localhost:5000' +
+      'http://https://ai-citizen-complaint-prioritizer.onrender.com' +
       complaint.photo
     );
 

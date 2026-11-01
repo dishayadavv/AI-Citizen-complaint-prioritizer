@@ -213,10 +213,10 @@ export class CityfixChatbotComponent {
   ======================================================= */
 
   private apiUrl =
-    'http://localhost:5000/api/complaints';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
 
   private chatApiUrl =
-    'http://localhost:5000/api/chat';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/chat';
 
 
   /* =======================================================

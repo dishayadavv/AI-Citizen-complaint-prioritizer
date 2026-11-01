@@ -37,7 +37,7 @@ export class CitizenRegister {
   // =====================================================
 
   private apiUrl =
-    'http://localhost:5000/api/citizens/register';
+    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/citizens/register';
 
 
   // =====================================================
