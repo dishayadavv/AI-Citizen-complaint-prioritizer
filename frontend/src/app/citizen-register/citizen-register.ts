@@ -37,7 +37,7 @@ export class CitizenRegister {
   // =====================================================
 
   private apiUrl =
-    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/citizens/register';
+    'https://ai-citizen-complaint-prioritizer.onrender.com/api/citizens/register';
 
 
   // =====================================================

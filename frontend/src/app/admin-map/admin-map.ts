@@ -134,7 +134,7 @@ export class AdminMap
   // ===================================================
 
   private apiUrl =
-    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
+    'https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
 
 
   // ===================================================

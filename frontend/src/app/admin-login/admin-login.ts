@@ -24,7 +24,7 @@ export class AdminLogin {
   isLoading = false;
 
   private apiUrl =
-    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/admin/login';
+    'https://ai-citizen-complaint-prioritizer.onrender.com/api/admin/login';
 
 
   constructor(

@@ -135,7 +135,7 @@ export class AdminAnalyticsComponent
   // ===================================================
 
   private apiUrl =
-    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints/analytics';
+    'https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints/analytics';
 
 
   // ===================================================

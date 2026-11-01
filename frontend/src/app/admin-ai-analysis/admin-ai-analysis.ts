@@ -120,7 +120,7 @@ export class AdminAiAnalysis {
   // ===================================================
 
   private apiUrl =
-    'http://https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
+    'https://ai-citizen-complaint-prioritizer.onrender.com/api/complaints';
 
 
   // ===================================================
@@ -1046,7 +1046,7 @@ export class AdminAiAnalysis {
 
 
     return (
-      'http://https://ai-citizen-complaint-prioritizer.onrender.com' +
+      'https://ai-citizen-complaint-prioritizer.onrender.com' +
       complaint.photo
     );
 
